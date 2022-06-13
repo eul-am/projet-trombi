@@ -21,9 +21,10 @@ from . views import *
 
 urlpatterns = [
     # (2) on définie les chemins d'urls des pages du site
-    path('', index, name='index'),
-    path('inscription/', inscription, name='inscription'),
+    #path('', index, name='index'),
+    path('', connexion, name='connexion'),
     path('connexion/', connexion, name='connexion'),
+    path('inscription/', inscription, name='inscription'),
     path('modification/', modification, name='modification'),
     path('profil/', profil, name='profil'),
     path('ajout/', ajout, name='ajout'),

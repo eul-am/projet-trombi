@@ -5,7 +5,7 @@ from  django.shortcuts import render
 # le rôle de la page, sa fonction
 def index(request):
     """page principale du site"""
-    return render (request, 'monsite/index.html')
+    return render (request, 'monsite/index.html', )
 
 
 def inscription(request):
