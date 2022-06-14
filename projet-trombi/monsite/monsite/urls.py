@@ -21,9 +21,9 @@ from . views import *
 
 urlpatterns = [
     # (2) on définie les chemins d'urls des pages du site
-    #path('', index, name='index'),
-    path('', connexion, name='connexion'),
-    path('connexion/', connexion, name='connexion'),
+    path('index/', index, name='index'),
+    # laisser les gillemets vide fais que la page soit la page principale
+    path('', authentification, name='authentification'),
     path('inscription/', inscription, name='inscription'),
     path('modification/', modification, name='modification'),
     path('profil/', profil, name='profil'),

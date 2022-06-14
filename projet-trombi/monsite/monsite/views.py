@@ -1,10 +1,10 @@
-from  django.shortcuts import render
+from  django.shortcuts import render, redirect
 
 
-# (1) définir le nom de la page web
-# le rôle de la page, sa fonction
+# (1) définir la vue (le nom de la page web : son rôle de la page, sa fonction)
 def index(request):
     """page principale du site"""
+    # on retourne le templates (le fichier html)
     return render (request, 'monsite/index.html', )
 
 
@@ -13,9 +13,10 @@ def inscription(request):
     return render (request, 'monsite/inscription.html')
 
 
-def connexion(request):
+def authentification(request):
     """sert à s'authentifier"""
-    return render (request, 'monsite/connexion.html')
+
+    return render (request, 'monsite/authentification.html')
 
 
 def modification(request):
