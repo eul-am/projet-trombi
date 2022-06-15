@@ -9,7 +9,8 @@ class Personne(models.Model):
     numero_inscription = models.CharField(max_length = 10)
     nom = models.CharField(max_length=30)
     prenom = models.CharField(max_length=30)
-    date_naissance = models.DateField()
+    # pour une date si blank=True, il faut rajouter null=True
+    date_naissance = models.DateField(blank=True, null=True)
     email = models.EmailField()
     telephone_fixe = models.CharField(max_length=20)
     telephone_portable = models.CharField(max_length=20)
@@ -20,6 +21,8 @@ class Personne(models.Model):
     # clé étrangère : relation 1,n
     # 1 personne peut étudier dans 1 seule université et 1 université peut accueillir plusieurs personnes
     universite = models.ForeignKey('Universite', on_delete=models.CASCADE)
+
+
 
 
 # table message :
