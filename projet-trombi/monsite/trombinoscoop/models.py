@@ -20,7 +20,7 @@ class Personne(models.Model):
     amis = models.ManyToManyField('self')
     # clé étrangère : relation 1,n
     # 1 personne peut étudier dans 1 seule université et 1 université peut accueillir plusieurs personnes
-    universite = models.ForeignKey('Universite', on_delete=models.CASCADE)
+    universite = models.ForeignKey(Universite, on_delete=models.CASCADE)
 
 
 
@@ -30,7 +30,7 @@ class Message(models.Model):
     """cette table contient les messages d'une personne"""
     # clé étrangère : relation 1,n
     # 1 personne peut envoyer 0 ou plusieurs messages et vice versa
-    auteur = models.ForeignKey('Personne', on_delete=models.CASCADE)
+    auteur = models.ForeignKey(Personne, on_delete=models.CASCADE)
     contenu = models.TextField()
     date_publication = models.DateField()
 
@@ -57,13 +57,13 @@ class Formation(models.Model):
 class Employe(Personne):
     bureau = models.CharField(max_length=30)
     # clé étrangère : 1 employé peut travailler dans 1 ou plusieurs campus
-    campus = models.ForeignKey('Campus', on_delete=models.CASCADE)
+    campus = models.ForeignKey(Campus, on_delete=models.CASCADE)
     # clé étrangère : 1 employé peut avoir 1 ou plusieurs emplois
-    emploi = models.ForeignKey('Emploi', on_delete=models.CASCADE)
+    emploi = models.ForeignKey(Emploi, on_delete=models.CASCADE)
 
 # l'étudiant hérite des caractèristiques d'une personne
 class Etudiant(Personne):
     # clé étrangère : 1 étudiant peut avoir 1 ou plusieurs formations
-    formation = models.ForeignKey('Formation', on_delete=models.CASCADE)
+    formation = models.ForeignKey(Formation, on_delete=models.CASCADE)
     annee = models.IntegerField()
 
