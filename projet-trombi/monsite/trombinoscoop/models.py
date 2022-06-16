@@ -20,7 +20,10 @@ class Personne(models.Model):
     amis = models.ManyToManyField('self')
     # clé étrangère : relation 1,n
     # 1 personne peut étudier dans 1 seule université et 1 université peut accueillir plusieurs personnes
-    universite = models.ForeignKey(Universite, on_delete=models.CASCADE)
+    faculte = models.ForeignKey('Faculte', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.prenom + " " + self.nom
 
 
 
@@ -34,22 +37,41 @@ class Message(models.Model):
     contenu = models.TextField()
     date_publication = models.DateField()
 
-class Universite(models.Model):
+    # pour que Django sache quel attribut de classe utiliser lorsqu'il doit l'afficher,
+    def __str__(self):
+        if len(self.contenu) > 20:
+            return self.contenu[:19] + "..."
+        else:
+            return self.contenu
+
+class Faculte(models.Model):
     nom = models.CharField(max_length=30)
     couleur = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.nom
 
 
 class Campus(models.Model):
     nom = models.CharField(max_length=30)
     adresse = models.CharField(max_length=60)
 
+    def __str__(self):
+        return self.nom
+
 
 class Emploi(models.Model):
     poste = models.CharField(max_length=30)
 
+    def __str__(self):
+        return self.poste
 
-class Formation(models.Model):
+# cursus
+class Cursus(models.Model):
     titre = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.titre
 
 # --------------- L'HÉRITAGE --------------------
 
@@ -61,9 +83,12 @@ class Employe(Personne):
     # clé étrangère : 1 employé peut avoir 1 ou plusieurs emplois
     emploi = models.ForeignKey(Emploi, on_delete=models.CASCADE)
 
+
+
 # l'étudiant hérite des caractèristiques d'une personne
 class Etudiant(Personne):
     # clé étrangère : 1 étudiant peut avoir 1 ou plusieurs formations
-    formation = models.ForeignKey(Formation, on_delete=models.CASCADE)
+    cursus = models.ForeignKey(Cursus, on_delete=models.CASCADE)
     annee = models.IntegerField()
+
 

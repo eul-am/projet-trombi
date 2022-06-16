@@ -1,23 +1,28 @@
 <!-- On utilise la base extends pour étendre le fichier 'monsite/base.html' -->
 {% extends 'monsite/base.html' %}
 
+	 	<!-- ------- Balise <title> ------- -->
 {% block title %} Connexion {% endblock %}
 
-{% block bodyId %} loginPage {% endblock %}
+	   <!-- ------- l'ID de la balise <body> ------- -->
+{% block bodyId %} Connexion {% endblock %}
 
+		<!-- ------- Balise <body> ------- -->
 {% block content %}
-<form action="???" method="get">
- <p>
- <label for="email">Courriel :</label>
- <input name="email" id="email" size="30" type="email" />
- </p>
- <p>
- <label for="password">Mot de passe :</label>
- <input name="password" id="password" size="30" type="password" />
- </p>
- <p>
- <input type="submit" value="Se connecter"/>
- <a href=" ">Créer un compte</a>
- </p>
-</form>
+	<form action="???" method="POST">
+		<!-- mesure de sécurité -->
+		{% csrf_token %}
+		<!-- gabarit du message d'erreurs éventuelles -->
+
+		{% if error %}
+			<!-- message d'erreurs -->
+			<p>{{ error }}</p>
+		{% endif %}
+
+		{{form.as_p}}
+ 			<input type="submit" value="Se connecter"/>
+ 			<a href=" ">Créer un compte</a>
+ 		</p>
+	</form>
 {% endblock %}
+

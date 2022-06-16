@@ -1,19 +1,27 @@
 
+from xml.dom.pulldom import START_DOCUMENT
 from django import forms
 
-class Authentification(forms.Form):
-    numero_inscription = forms.CharField(max_length=10)
-    nom = forms.CharField(max_length=30)
-    prenom = forms.CharField(max_length=30)
-    # pour une date si blank=True, il faut rajouter null=True
-    date_naissance = forms.DateField(blank=True, null=True)
-    email = forms.EmailField()
-    telephone_fixe = forms.CharField(max_length=20)
-    telephone_portable = forms.CharField(max_length=20)
-    password = forms.CharField(min_length=6)
-    # clé étrangère : relation n,n
-    # 1 personne peut avoir 0 ou plusieurs amis et plusieurs amis peuvent avoir 1 même ami
-    amis = forms.ManyToManyField('self')
-    # clé étrangère : relation 1,n
-    # 1 personne peut étudier dans 1 seule université et 1 université peut accueillir plusieurs personnes
-    universite = forms.ForeignKey('Universite', on_delete=models.CASCADE)
+from trombinoscoop.models import Etudiant
+
+# Formulaire de connexion
+class FormConnexion(forms.Form):
+    email = forms.EmailField(label='Courriel')
+    password = forms.CharField(label='Mot de passe', widget=forms.PasswordInput)
+
+    def clean(self):
+        donnee_valide = super(FormConnexion, self).clean()
+        email = donnee_valide.get('email')
+        password = donnee_valide.get('password')
+
+        if email and password:
+            if password != 'sesame' or email != 'euloge@mail.fr':
+                raise forms.ValidationError("Courriel ou mot de passe erroné")
+        return donnee_valide
+
+# Formulaire Étudiant
+class FormProfilEtudiant(forms.ModelForm):
+    class Meta:
+        model = Etudiant
+        # tuple avec un seul paramètre
+        exclude = ('amis',)

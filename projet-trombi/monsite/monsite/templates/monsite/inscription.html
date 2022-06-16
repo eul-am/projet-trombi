@@ -1,6 +1,26 @@
 <!-- On utilise la base extends pour étendre le fichier 'monsite/base.html' -->
 {% extends 'monsite/base.html' %}
 
+     <!-- ------- Balise <title> ------- -->
 {% block title %} Inscription {% endblock %}
 
-{% block content %}  {% endblock %}
+       <!-- ------- Balise <body> ------- -->
+{% block title %} Inscription {% endblock %}
+
+{% block content %}
+     <h>Création de compte</h>
+	<form action="inscription" method="GET">
+		<!-- mesure de sécurité -->
+		{% csrf_token %}
+		<!-- gabarit du message d'erreurs éventuelles -->
+
+		{% if error %}
+			<!-- message d'erreurs -->
+			<p>{{ error }}</p>
+		{% endif %}
+
+		{{form.as_p}}
+ 			<input type="submit" value="S'inscrire"/>
+ 		</p>
+	</form>
+{% endblock %}
