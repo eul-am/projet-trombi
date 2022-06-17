@@ -1,0 +1,28 @@
+<!-- On utilise la base extends pour étendre le fichier 'monsite/base.html' -->
+{% extends 'appliweb/base.html' %}
+
+	 	<!-- ------- Balise <title> ------- -->
+{% block title %} Connexion {% endblock %}
+
+	   <!-- ------- l'ID de la balise <body> ------- -->
+{% block bodyId %} Connexion {% endblock %}
+
+		<!-- ------- Balise <body> ------- -->
+{% block content %}
+	<form method="POST" action="connexion">
+		<!-- mesure de sécurité -->
+		{% csrf_token %}
+
+		<!-- gabarit du message d'erreurs éventuelles -->
+		{% if error %}
+			<!-- message d'erreurs -->
+			<p>{{ error }}</p>
+		{% endif %}
+
+		{{form.as_p}}
+ 			<input type="submit" value="Se connecter"/>
+ 			<a href="???">Créer un compte</a>
+ 		</p>
+	</form>
+{% endblock %}
+

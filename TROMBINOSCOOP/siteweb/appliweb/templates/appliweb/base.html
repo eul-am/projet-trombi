@@ -1,0 +1,22 @@
+{% load static %}
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+            <!-- On insère les données entre les bloc -->
+    <title>Trombinoscoop – {% block title %} Bienvenue {% endblock %}</title>
+</head>
+
+<!-- --------- Body -------- -->
+<body id="{% block bodyId %} genericPage {% endblock %}">
+    <!-- --------- En-tête -------- -->
+    <header>
+        {% block headerContent %} {% endblock %}
+    </header>
+    <!-- --------- Section -------- -->
+    <section id="content">
+        {% block content %} {% endblock %}
+    </section>
+</body>
+</html>
