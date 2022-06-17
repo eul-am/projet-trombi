@@ -1,4 +1,5 @@
 # (1) on importe les modules render et redirect
+from ast import For
 from  django.shortcuts import render, redirect
 # on importe le (module de) formulaire créé : la classe, le type d’objet 'FormAuthentification'
 from monsite.forms import *
@@ -18,10 +19,8 @@ def inscription(request):
         if form.is_valid():
             form.save()
             return redirect('/connexion')
-
         else:
             return render (request, 'monsite/profil.html', {'form': form})
-
     else:
         form = FormProfilEtudiant()
         return render (request, 'monsite/profil.html', {'form', form})

@@ -2,25 +2,61 @@
 {% extends 'monsite/base.html' %}
 
      <!-- ------- Balise <title> ------- -->
-{% block title %} Inscription {% endblock %}
+{% block title %} Création d'un profil {% endblock %}
 
        <!-- ------- Balise <body> ------- -->
-{% block title %} Inscription {% endblock %}
+{% block bodyId %} PageProfilUtilisateur {% endblock %}
 
 {% block content %}
-     <h>Création de compte</h>
-	<form action="inscription" method="GET">
+     <h>Création d'un compte</h>
+	<form action="inscription" method="POST">
 		<!-- mesure de sécurité -->
 		{% csrf_token %}
-		<!-- gabarit du message d'erreurs éventuelles -->
 
+		<!-- gabarit du message d'erreurs éventuelles -->
 		{% if error %}
 			<!-- message d'erreurs -->
 			<p>{{ error }}</p>
 		{% endif %}
 
+		<!-- formulaire -->
 		{{form.as_p}}
- 			<input type="submit" value="S'inscrire"/>
+
+		<!-- bouton de validation -->
+		<p>
+ 			<input type="submit" value="Créer un compte"/>
  		</p>
 	</form>
 {% endblock %}
+
+
+<h1>Création d’un compte</h1>
+<form> 
+ <p>
+ 	<label for="profileType">Vous êtes :</label>
+ 	<select id="profileType"> 
+ 		<option value="student" {% if studentForm.is_bound %} selected="selected" {% endif %}>Étudiant</option>
+ 		<option value="employee" {% if employeeForm.is_bound %} selected="selected" {% endif %}>Employé</option>
+ 	</select>
+ </p>
+</form>
+
+<form action="register" method="get" id="studentForm">
+	<!-- mesure de sécurité -->
+	{% csrf_token %}
+	<!-- Formulaire Étudiant -->
+ 	{{ studentForm.as_p }}
+ 	<p>
+ 		<input type="hidden" name="profileType" value="student" /> 
+ 		<input type="submit" value="Créer un compte" />
+ 	</p>
+</form>
+
+<form action="register" method="get" id="employeeForm">
+ {{ employeeForm.as_p }}
+ <p>
+ 	<input type="hidden" name="profileType" value="employee" /> 
+ 	<input type="submit" value="Créer un compte" />
+ </p>
+</form>
+{% endblock %

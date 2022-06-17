@@ -2,7 +2,8 @@
 from xml.dom.pulldom import START_DOCUMENT
 from django import forms
 
-from trombinoscoop.models import Etudiant
+# on importe toutes les classes de Formulaires définies dans la models.py
+from trombinoscoop.models import *
 
 # Formulaire de connexion
 class FormConnexion(forms.Form):
@@ -19,9 +20,22 @@ class FormConnexion(forms.Form):
                 raise forms.ValidationError("Courriel ou mot de passe erroné")
         return donnee_valide
 
-# Formulaire Étudiant
+
+
+
+
+
+# Formulaire Profil Étudiant (aussi formulaire d'inscription étudiant)
 class FormProfilEtudiant(forms.ModelForm):
     class Meta:
         model = Etudiant
         # tuple avec un seul paramètre
         exclude = ('amis',)
+
+
+
+# Formulaire Profil Employe (aussi formulaire d'inscription employé)
+class FormProfilEmploye(forms.ModelForm):
+    class Meta:
+        model = Employe
+        exclude = ('friends',)

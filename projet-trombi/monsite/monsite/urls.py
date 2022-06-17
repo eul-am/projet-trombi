@@ -14,10 +14,11 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+
 from django.urls import path
-# (1) on importe depuis le fichier views.py (la vue) toutes les pages du site,
-# (Les fonctions, les rôles, les noms de pages)
+# (1) on importe depuis le fichier views.py (la vue) toutes les pages du site, (Les fonctions, les rôles, les noms de pages)
 from . views import *
+
 
 urlpatterns = [
     # (2) on définie les chemins d'urls des pages du site
@@ -25,8 +26,8 @@ urlpatterns = [
     # laisser les gillemets vide fais que la page soit la page principale
     path('', connexion, name='connexion'),
     path('inscription/', inscription, name='inscription'),
-    path('modification/', modification, name='modification'),
-    path('profil/', profil, name='profil'),
-    path('ajout/', ajout, name='ajout'),
+    #path('modification/', modification, name='modification'),
+    #path('profil/', profil, name='profil'),
+    #path('ajout/', ajout, name='ajout'),
     path('admin/', admin.site.urls),
 ]
