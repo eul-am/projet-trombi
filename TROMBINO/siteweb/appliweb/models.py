@@ -47,7 +47,7 @@ class Job(models.Model):
 """
 
 
-class Formation(models.Model):
+class Cursus(models.Model):
     titre = models.CharField(max_length=30)
 
     def __str__(self):
@@ -93,7 +93,8 @@ class Employe(Personne):
 class Etudiant(Personne):
     #
     #
-    formation = models.ForeignKey(Formation, on_delete=models.CASCADE)
+    cursus = models.ForeignKey(Cursus, on_delete=models.CASCADE)
+    year = models.IntegerField()
 
 
 class Message(models.Model):
