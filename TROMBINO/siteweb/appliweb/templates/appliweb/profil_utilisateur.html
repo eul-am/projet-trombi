@@ -1,0 +1,73 @@
+{% extends "appliweb/base.html" %}
+
+{% block title %} Création d'un profil {% endblock %}
+
+{% block bodyId %}PageProfilUtilisateur{% endblock %}
+
+{% block content %}
+<h1>Création d’un compte</h1>
+<!-- ------------ Formulaire  --------------- -->
+<form action="inscription" method="POST">
+	<!-- mesure de sécurité -->
+		{% csrf_token %}
+	<!-- gabarit du message d'erreurs éventuelles -->
+	{% if error %}
+	<!-- message d'erreurs -->
+		<p>{{ error }}</p>
+	{% endif %}
+ 	<p>
+ 		<label for="TypeProfil">Vous êtes :</label>
+ 		<select id="TypeProfil">
+ 			<option value="etudiant" {% if formEtudiant.is_bound %} selected="selected" {% endif %}>Étudiant</option>
+ 			<option value="employe" {% if formEmploye.is_bound %} selected="selected" {% endif %}>Employé</option>
+ 		</select>
+ 	</p>
+</form>
+
+<!-- ------------ Formulaire Inscription Étudiant --------------- -->
+
+<form action="inscription" method="POST" id="formEtudiant">
+	{% if error %}
+		<!-- message d'erreurs -->
+		<p>{{ error }}</p>
+	{% endif %}
+
+	{{ formEtudiant.as_p }}
+
+	<p>
+		<input type="hidden" name="TypeProfil" value="etudiant" />
+		<input type="submit" value="Créer un compte" />
+	</p>
+</form>
+
+<!-- ------------ Formulaire Inscription Employé--------------- -->
+
+<form action="inscription" method="POST" id="formEmploye">
+	{% if error %}
+	<!-- message d'erreurs -->
+		<p>{{ error }}</p>
+	{% endif %}
+
+	{{ formEmploye.as_p }}
+
+	<p>
+		<input type="hidden" name="TypeProfil" value="employe" />
+		<input type="submit" value="Créer un compte" />
+	</p>
+</form>
+
+<script type="text/javascript">
+ function displayRightForm() {
+ 	if ($('#TypeProfil').val() == 'etudiant') {
+ 		$('#formEmploye').hide();
+ 		$('#formEtudiant').show();
+	 }
+ 	else {
+ 		$('#formEtudiant').hide();
+ 		$('#formEmploye').show();
+ 	}
+ }
+ $(document).ready(displayRightForm);
+ $('#TypeProfil').change(displayRightForm);
+</script>
+{% endblock %}

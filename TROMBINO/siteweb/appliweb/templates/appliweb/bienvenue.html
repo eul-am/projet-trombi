@@ -1,0 +1,10 @@
+{% extends "appliweb/base.html" %}
+
+{% block title %} Bienvenue {% endblock %}
+
+{% block bodyId %}PageBienvenue{% endblock %}
+
+{% block content %}
+    <p>{{ logged_user.first_name }} {{ logged_user.last_name }},
+    bienvenue sur Trombinoscoop !</p>
+{% endblock %}
