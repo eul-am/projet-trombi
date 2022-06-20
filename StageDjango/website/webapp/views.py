@@ -8,18 +8,33 @@ from .models import Utilisateur
 
 
 def connexion(request):
-    """ Cette fonction affiche la page de connexion """
+    """ Cette fonction affiche la page de connexion et permet de s'authentifier """
+    # (2) si le formulaire a été soumis
+    if len(request.POST) > 0:
+        # (2) initialiser
+        form = FormConnexion(request.POST)
+        # si
+        if form.is_valid():
+            # récupère l'email que l'utilisateur a saisi
+            #email_utilisateur = form.donnee['email']
+            # récupérer l'utilisateur à qui cet email appartient
+            #utilisateur_connecte = Utilisateur.objects.get(email=email_utilisateur)
+            # sauvegarder l'id de cette personne dans la session
+            #request.session['id_utilisateur_connecte'] = utilisateur_connecte.id
+            # puis on fait la redirection vers la page d'accueil
+            return redirect('accueil')
+        else:
+            return render(request, 'webapp/connexion.html', {'form': form})
+    else:
+        # (1) tant que le formulaire n'a pas été soumis,
+        form = FormConnexion()
+        return render(request, 'webapp/connexion.html', {'form': form})
 
-    form = FormConnexion(request.POST)
-    return render(request, 'webapp/connexion.html', {'form': form})
 
-
-
-""" Gestion des formulaires d'inscriptions des Étudiants et des Employés """
 def inscription(request):
     """ Cette fonction affiche la page d'inscription """
     # (1) si au moins 1 formulaire a été soumis
-    if len(request.POST) > 0 :
+    if len(request.POST) > 0:
         # (2) initialiser
         form = FormInscription(request.POST)
         # si le formulaire est valide
@@ -39,7 +54,6 @@ def inscription(request):
         return render(request, 'webapp/inscription.html', {'form': form})
 
 
-""" Gestion des formulaires d'inscriptions des Étudiants et des Employés """
 def accueil(request):
     """ Cette fonction affiche la page d'accueil """
-    return render(request, 'webapp/accueil.html',)
+    return render(request, 'webapp/accueil.html', )
