@@ -1,0 +1,25 @@
+{% extends "webapp/base.html" %}
+
+{% block title %} Connexion {% endblock %}
+
+{% block bodyId %}PageConnexion{% endblock %}
+
+{% block content %}
+	<form action=" " method="POST">
+		<!-- mesure de sécurité -->
+		{% csrf_token %}
+		<h1> Connexion </h1>
+		<!-- gabarit du message d'erreurs éventuelles -->
+		{% if error %}
+			<!-- message d'erreurs -->
+			<p>{{ error }}</p>
+		{% endif %}
+
+		{{form.as_p}}
+
+		<p>
+ 			<input type="submit" value="Se connecter"/>
+ 			<a href=" ">Créer un compte</a>
+ 		</p>
+	</form>
+{% endblock %}
