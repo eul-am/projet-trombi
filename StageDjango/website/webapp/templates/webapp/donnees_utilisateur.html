@@ -1,0 +1,93 @@
+{% extends "webapp/base.html" %}
+
+{% block title %} Profil {% endblock %}
+
+{% block bodyId %}PageProfil{% endblock %}
+
+{% block content %}
+
+	<h1> Création de compte </h1>
+
+<!-- ----------- Formulaire  --------------- -->
+
+	<form action=" " method="POST">
+		<!-- mesure de sécurité -->
+		{% csrf_token %}
+
+		<!-- gabarit du message d'erreurs éventuelles -->
+		{% if error %}
+			<!-- message d'erreurs -->
+			<p>{{ error }}</p>
+		{% endif %}
+
+		<p>
+ 		<label for="TypeProfil"> Vous êtes :</label>
+ 		<select id="TypeProfil">
+ 			<option value="entreprise" {% if formEntreprise.is_bound %} selected="selected" {% endif %}>Entreprise</option>
+ 			<option value="particulier" {% if formParticulier.is_bound %} selected="selected" {% endif %}>Particulier</option>
+ 		</select>
+ 	</p>
+	</form>
+<!-- ------------ Entreprise ------------- -->
+
+	<form action=" " method="POST" id="formEntreprise">
+		<!-- mesure de sécurité -->
+		{% csrf_token %}
+
+		<!-- gabarit du message d'erreurs éventuelles -->
+		{% if error %}
+			<!-- message d'erreurs -->
+			<p>{{ error }}</p>
+		{% endif %}
+
+		{{formE.as_p}}
+
+		<p>
+			<!-- Champ caché -->
+			<input type="hidden" name="TypeProfil" value="entreprise" />
+ 			<input type="submit" value="S'inscrire"/>
+ 			<a href=" "> Se connecter </a>
+ 		</p>
+
+	</form>
+
+
+<!-- ---------- Particulier --------------- -->
+
+	<form action=" " method="POST" id="formParticulier">
+		<!-- mesure de sécurité -->
+		{% csrf_token %}
+
+		<!-- gabarit du message d'erreurs éventuelles -->
+		{% if error %}
+			<!-- message d'erreurs -->
+			<p>{{ error }}</p>
+		{% endif %}
+
+		{{formP.as_p}}
+
+		<p>
+			<!-- Champ caché -->
+			<input type="hidden" name="TypeProfil" value="particulier" />
+ 			<input type="submit" value="S'inscrire"/>
+ 			<a href=" "> Se connecter </a>
+ 		</p>
+	</form>
+<!-- ---------- SCRIPT --------------- -->
+<script type="text/javascript">
+ function displayRightForm() {
+ 	if ($('#TypeProfil').val() == 'entreprise') {
+ 		$('#formParticulier').hide();
+ 		$('#formEntreprise').show();
+	 }
+ 	else {
+ 		$('#formEntreprise').hide();
+ 		$('#formParticulier').show();
+ 	}
+ }
+
+ $(document).ready(displayRightForm);
+ $('#TypeProfil').change(displayRightForm);
+</script>
+
+{% endblock %}

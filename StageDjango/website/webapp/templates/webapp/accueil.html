@@ -2,13 +2,13 @@
 
 {% block title %} Accueil {% endblock %}
 
-{% block bodyId %}PageAccueil{% endblock %}
+{% block bodyId %} PageAccueil {% endblock %}
 
 {% block headerContent %}
     <!-- ----------- NOM DE L'UTILISATEUR ------------- -->
-    <p id="nom">{{ utilisateur_connecte.nom }} {{ logged_user.last_name }}</p>
+    <p id="nom">{{ utilisateur.nom }} {{ logged_user.last_name }}</p>
 
-    <h1> Accueil </h1>
+    <h1> Profil </h1>
     <!-- ----------- LIENS PROFIL ------------- -->
     <p id="lien-profil">
         <a href="#" class="bouton-lien"> Voir le profil</a>

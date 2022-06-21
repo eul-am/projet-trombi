@@ -8,10 +8,10 @@ class FormConnexion(forms.ModelForm):
     class Meta:
         # la table (modèle) à convertir
         model = Utilisateur
-        # on liste, tuple des champs à exclure
-        exclude = ('nom', 'sexe',)
-        # OU liste des champs à utiliser
-        # fields = ['name', 'title', 'birth_date']
+        # liste, tuple des champs à utiliser
+        fields = ('email', 'password',)
+        # OU liste des champs à exclure
+        # exclude = ['name', 'title', 'birth_date']
 
     email = forms.EmailField(label='Courriel')
     password = forms.CharField(label='Mot de passe', widget=forms.PasswordInput)
@@ -37,9 +37,18 @@ class FormConnexion(forms.ModelForm):
 
 
 # conversion de la table UTILISATEUR en formulaire d'inscription
-class FormInscription(forms.ModelForm):
+class Form_inscription_Entreprise(forms.ModelForm):
     class Meta:
         # la table qu'on convertit en formulaire
         model = Utilisateur
         # tous les champs de la table doivent être utilisés
-        fields = '__all__'
+        exclude = ('nom', 'sexe',)
+
+
+# conversion de la table UTILISATEUR en formulaire d'inscription
+class Form_inscription_Particulier(forms.ModelForm):
+    class Meta:
+        # la table qu'on convertit en formulaire
+        model = Utilisateur
+        # tous les champs de la table doivent être utilisés
+        exclude = ('representant', 'raison_sociale',)
