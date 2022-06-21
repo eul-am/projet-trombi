@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" type="text/css" href="spectacle_3.css">
+	<title>Infos pratiques</title>
+
+</head>
+<body>
+    <a href="page1.htm">Programmation</a>&nbsp; - &nbsp;
+                <a href="page2.htm">Agenda</a>&nbsp; - &nbsp;
+                <a href="page3.php">Réservation</a>&nbsp; - &nbsp;
+                <a href="page4.htm">Infos Pratiques</a>&nbsp; - &nbsp;
+                <a href="page5.htm">Connexion</a>
+
+	<!-- MAIN (Center website) -->
+	<div class="main">
+
+		<h1 
+			class="h1-ev">INFOS PRATIQUES
+		
+		</h1>
+
+		<div id="conteneur-bouton">
+  			<!-- <button class="btn actif" onclick="filtrerPar('toute')"> Accès & Services</button> -->
+            <button class="btn" onclick="filtrerPar('recital')"> Accès & Services</button>
+  			<button class="btn" onclick="filtrerPar('opera')"> S'inscrire à la Newletter</button>
+  			<button class="btn" onclick="filtrerPar('concert')"> Contact</button>
+		</div>
+
+        <div class="colonne recital">
+            <div class="contenu">
+                <div class="infos">
+                <h3 class="h3-ev">VENIR A L'OPERA</h3>
+                    <div class="acces">
+                        <h5 class="">En Voiture</h5>
+                    </div>
+                    <div class="acces">
+                        <h5 class="">En Bus</h5>
+                    </div>
+                    <div class="acces">
+                        <h5 class="">En Métro</h5>
+                    </div>
+                </div>
+                <div class="infos">
+                    <h3 class="h3-ev">SERVICE</h3>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="ligne">
+            <div class="colonne opera">
+                <div class="contenu">
+                    <div class="infos">
+                        <h3 class="h3-ev">S'INSCRIRE A LA NEWSLETTER</h3>
+                            <div class="acces">
+                                <h5 class="">En Voiture</h5>
+                            </div>
+                        </div>
+                        <div class="infos">
+                            <form action=""></form>
+                                  <input type="nom" class="form-control" name="nom" id="nom" placeholder="Enter nom">
+                                  <input type="prenom" class="form-control" name="prenom" id="prenom" placeholder="Enter prenom">
+                                  <input type="email" class="form-control" name="mail" id="mail" placeholder="Enter mail">
+                                  <button type="submit" name="login" class="btn btn-primary">Login</button>
+                            </form>
+                        </div>
+                </div>
+        </div>
+
+        <div class="colonne concert">
+		    <div class="contenu">
+		    	<div class="infos">
+                    <h3 class="h3-ev">VENIR A L'OPERA</h3>
+                            <div class="acces">
+                                <h5 class="">Informations billeterie</h5>
+                            </div>
+                            <div class="acces">
+                                <h5 class="">Téléphone</h5>
+                            </div>
+                            <div class="acces">
+                                <h5 class="">Contact Presse</h5>
+                            </div>
+                </div>
+		    </div>
+		</div>
+		
+		</div> <!-- FIN DIV ligne -->
+	</div> <!-- FIN MAIN -->
+
+	<section>
+		<!-- CODE APRÈS LE MAIN -->
+	</section>
+
+	<script type="text/javascript" src="js/spectacle_3.js"></script>
+</body>
+<footer></footer>
+</html>

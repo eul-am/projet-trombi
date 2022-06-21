@@ -1,0 +1,112 @@
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    background-color: #f1f1f1;
+    padding: 20px;
+    font-family: Arial;
+  }
+  
+  /* Center website */
+  .main {
+    max-width: 1200px; /* largeur maximale du body*/
+    margin: auto;
+    border: red solid;
+  }
+  
+  .h1-ev {
+    font-size: 50px;
+    word-break: break-all;
+    padding: 15px;
+  }
+  
+  #conteneur-bouton {
+    padding: 15px;
+  }
+  
+  .ligne {
+    margin: 10px -3px;
+    border: blue solid;
+  }
+  
+  /* Ajout d'un padding entre chaque colonne à l'intérieur de la ligne */
+  .ligne,
+  .ligne > .colonne {
+    /*padding:  10px;*/ 
+  }
+  
+  /* On créé 3 colonne égales qui flottent les unes à la suite des autres */
+  .colonne {
+    float: left;
+    width: 100%;
+    display: none;
+    padding: 15px;
+  }
+  
+  /* Clear floats after rows */
+  /* après la balise..., faire ce qui est dit en dessous */
+  .ligne:after {
+    content: "";
+    display: table; /*afficher sous forme de ligne*/
+    clear: both;
+  }
+  
+  /* Contenu */
+  .contenu {
+    background-color: white;
+    padding: 10px;
+    height: 500px; /* taille fixe du contenu de la case */
+    border: green solid;
+  }
+  
+ .acces{
+     border: black solid;
+     margin: 10px;
+ }
+
+ .infos{
+     border: violet solid;
+     margin: 10px;
+ }
+
+
+  /* On ajoute la classe "montrer" dans l'élément filtré*/
+  .montrer {
+    display: block;
+  }
+  
+  /* Style des boutons */
+  .btn {
+    border: none;
+    outline: none;
+    padding: 12px 16px;
+    background-color: white;
+    cursor: pointer;
+  }
+  
+  /* Add a grey background color on mouse-over */
+  .btn:hover {
+    background-color: #ddd;
+  }
+  
+  /* Add a dark background color to the active button */
+  .btn.actif {
+    background-color: #666;
+     color: white;
+  }
+  
+  
+  /* Responsive - dispose en une ligne au lieu de 3 colonnes */
+  @media screen and (max-width: 900px) {
+    .colonne {
+      width: 60%;
+    }
+  }
+  
+  /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+  @media screen and (max-width: 600px) {
+    .colonne {
+      width: 100%;
+    }
+  }
