@@ -34,7 +34,7 @@ def inscription(request):
         # (2) initialiser
         formE = Form_inscription_Entreprise(prefix='en')
         formP = Form_inscription_Particulier(prefix='pa')
-        # si
+        # si le contenu de la variable POST est une entreprise
         if request.POST['TypeProfil'] == 'entreprise':
             formE = Form_inscription_Entreprise(request.POST, prefix='en')
             if formE.is_valid():
@@ -56,14 +56,36 @@ def inscription(request):
         return render(request, 'webapp/donnees_utilisateur.html', {'formE': formE, 'formP': formP})
 
 
-def accueil(request):
-    """ Cette fonction affiche la page d'accueil """
-
+# Protection des pages privées : fonction dont le rôle est également de récupérer, le cas échéant, l’utilisateur
+# authentifié de la base de données.
+def utilisateur_connecte(request):
+    
+    # si on trouve un id d’utilisateur dans la session
     if 'id' in request.session:
         id_utilisateur = request.session['id']
-        utilisateur = Utilisateur.objects.get(id=id_utilisateur)
-        return render(request, 'webapp/accueil.html', {'utilisateur': utilisateur})
+        # On cherche un etudiant
+        if len(Etudiant.objects.filter(id=id_utilisateur)) == 1:
+            return Etudiant.objects.get(id=id_utilisateur)
+        # On cherche un Employé
+        elif len(Employe.objects.filter(id=id_utilisateur)) == 1:
+            return Employe.objects.get(id=id_utilisateur)
+        # Si on n’a rien trouvé,
+        else:
+            return None
+    #  Si rien n’est trouvé, alors on retourne None
     else:
+        return None
+
+
+def accueil(request):
+    """ Cette fonction affiche la page d'accueil """
+    # une connexion réussie est un utilisateur connecté
+    connexion_reussie = connexion (request)
+    # si la connexion réussie,
+    if connexion_reussie:
+        # rendez-vous vers la page d'accueil
+        return render(request, 'webapp/accueil.html', {'utilisateur_connecte': utilisateur_connecte})
+    # sinon,
+    else:
+        # restez sur la page de connexion
         return redirect('connexion')
-
-
