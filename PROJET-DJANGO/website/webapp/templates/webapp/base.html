@@ -8,7 +8,11 @@
     <!-- -----------BODY------------- -->
     <body  id="{% block bodyId %}genericPage{% endblock %}">
         <!-- ----------- EN-TÊTE ------------- -->
-        <header> {% block headerContent %} {% endblock %} </header>
+        <header>
+            {% block headerContent %}
+
+            {% endblock %}
+        </header>
         <!-- ----------- SECTION ------------- -->
         <section id="content">
             {% block content %} {% endblock %}
