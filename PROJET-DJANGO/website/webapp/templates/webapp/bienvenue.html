@@ -1,0 +1,17 @@
+{% extends "webapp/base.html" %}
+
+{% block title %} Bienvenue {% endblock %}
+
+{% block bodyId %} PageDeBienvenue {% endblock %}
+
+{% block headerContent %}
+    <!-- ----------- NOM DE L'UTILISATEUR ------------- -->
+    <p id="nom">{{ User.last_name }} {{ logged_user.last_name }}</p>
+
+    <h1> Profil </h1>
+    <!-- ----------- LIENS PROFIL ------------- -->
+    <p id="lien-profil">
+        <a href="#" class="bouton-lien"> Voir le profil</a>
+        <a href="#" class="bouton-lien"> Modifier le profil</a>
+    </p>
+{% endblock %}

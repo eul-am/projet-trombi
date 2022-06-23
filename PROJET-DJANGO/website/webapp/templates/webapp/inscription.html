@@ -1,0 +1,25 @@
+{% extends "webapp/base.html" %}
+
+{% block title %} Inscription {% endblock %}
+
+{% block bodyId %}PageIncription{% endblock %}
+
+{% block content %}
+	<form method="POST">
+		<!-- mesure de sécurité -->
+		{% csrf_token %}
+		<h1> Inscription </h1>
+		<!-- gabarit du message d'erreurs éventuelles -->
+		{% if error %}
+			<!-- message d'erreurs -->
+			<p>{{ error }}</p>
+		{% endif %}
+
+		{{form.as_p}}
+
+		<p>
+ 			<input type="submit" value="S'inscrire'"/>
+ 			<a href=" ">Se connecter</a>
+ 		</p>
+	</form>
+{% endblock %}
