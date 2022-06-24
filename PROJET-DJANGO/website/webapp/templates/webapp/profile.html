@@ -1,0 +1,41 @@
+{% extends "webapp/base.html" %}
+
+{% block title %} Profil {% endblock %}
+
+{% block bodyId %} PageDeProfil {% endblock %}
+
+{% block headerContent %}
+    <h1> Profil </h1>
+    <!-- ----------- LIENS PROFIL ------------- -->
+{% endblock %}
+
+{% block content %}
+
+    <h1> Affichage d'un profil </h1>
+    <dl>
+        <dt> Nom : </dt>
+            <dd> {{ User.last_name }} </dd>
+
+        <dt> Prénom : </dt>
+            <dd> {{ User.first_name }} </dd>
+
+        <dt> Sexe : </dt>
+            <dd> {{ User.sexe }} </dd>
+
+        <dt> Date de naissance : </dt>
+            <dd> {{ User.birthdate }} </dd>
+
+        <dt> E-mail : </dt>
+            <dd> {{ User.email }} </dd>
+
+        <dt> Téléphone : </dt>
+            <dd> {{ User.phone }} </dd>
+    </dl>
+
+    <!-- BOUTON RETOUR -->
+    <p>
+        <a href="bienvenue" class=""> Retour </a>
+    </p>
+
+{% endblock %}
+

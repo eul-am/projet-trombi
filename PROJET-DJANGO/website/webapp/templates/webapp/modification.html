@@ -1,0 +1,25 @@
+{% extends "webapp/base.html" %}
+
+{% block title %} Modification profile {% endblock %}
+
+{% block bodyId %} PageModification {% endblock %}
+
+{% block content %}
+	<form action=" " method="POST">
+		<!-- mesure de sécurité -->
+		{% csrf_token %}
+		<h1> Modifier le profil </h1>
+		<!-- gabarit du message d'erreurs éventuelles -->
+		{% if error %}
+			<!-- message d'erreurs -->
+			<p>{{ error }}</p>
+		{% endif %}
+
+		{{form.as_p}}
+
+		<p>
+ 			<input type="submit" value="Modifier'"/>
+ 			<a href=" ">Retour</a>
+ 		</p>
+	</form>
+{% endblock %}

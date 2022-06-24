@@ -3,27 +3,44 @@ from django import forms
 from .models import User
 
 
+class User_Profile_Form(forms.ModelForm):
+    #
+    class Meta:
+        model = User
+        fields = '__all__'
+
+
+
 # Formulaire de Connexion
 class Login_Form(forms.ModelForm):
     #
     email = forms.EmailField(label='Courriel')
     password = forms.CharField(label='Mot de passe', widget=forms.PasswordInput)
-    def clean(self):  # (1)
-        """ """
-        cleaned_data = super(Login_Form, self).clean()  # (2)
-        email = cleaned_data.get("email")  # (3)
-        password = cleaned_data.get("password")  # (3)
 
-        # on vérifie que les deux champs sont valides
+    # Mise en conformité des données : (Nettoyage des données)
+    def clean(self):
+        """ Fonction permettant le nettoyage des données """
 
-        if email and password:  # (4)
-            #
-            resultat = User.objects.filter(password=password, email=email)
-            # si l'un des identifiants est différent de celui qui est stocké dans la base de données
-            if len(resultat) != 1:  # (5)
-                # lever cette erreur d'exception
-                raise forms.ValidationError("Adresse de courriel ou mot de passe erronné.")  # (6)
-        return cleaned_data  # (7)
+        cleaned_data = super(Login_Form, self).clean()
+        email = cleaned_data.get("email")
+        password = cleaned_data.get("password")
+
+        # (1)  si l'utilisateur a renseigné ses identifiants
+        # (2)  il faut les retourner
+        # (3)  mais ils doivent être identiques à ceux stockés dans la base de données
+        # (4)  si l'une de ces données est différente
+        # (5)  lever une exception
+
+        # (1)
+        if email and password:
+            # (3)
+            donnees = User.objects.filter(email=email, password=password)
+            # (4)
+            if len(donnees) != 1:
+                # (5)
+                raise forms.ValidationError("Adresse de courriel ou mot de passe erronné.")
+        # (2)
+        return cleaned_data
 
     #
     class Meta:
@@ -34,13 +51,11 @@ class Login_Form(forms.ModelForm):
         # OU liste des champs à exclure
         # exclude = ['name', 'title', 'birth_date']
 
-    # Validation du courriel et du mote de passe en utilisant la base de données
-
 
 # Formulaire d'Inscription
 class Register_Form(forms.ModelForm):
     # on masque le mot de passe
-    last_name = forms.CharField(label="Nom")
+    nom = forms.CharField(label="Nom")
     password = forms.CharField(label="Mot de passe", widget=forms.PasswordInput)
 
     #
@@ -49,3 +64,17 @@ class Register_Form(forms.ModelForm):
         model = User
         # liste, tuple des champs à utiliser
         fields = '__all__'
+
+
+class Part_Profile_Form(User_Profile_Form):
+    #
+    class Meta:
+        model: User_Profile_Form
+        fields = '__all__'
+
+
+class Ent_Profile_Form(User_Profile_Form):
+
+    class Meta:
+        model: User_Profile_Form
+        exclude = ('sexe',)
