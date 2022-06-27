@@ -1,0 +1,43 @@
+{% extends "webapp/base.html" %}
+
+{% block title %}Affichage d’un profil{% endblock %}
+
+{% block bodyId %}showProfilePage{% endblock %}
+
+{% block content %}
+<h1>Affichage d’un profil</h1>
+<dl class="fieldList">
+   <dt>Nom :</dt>
+      <dd>{{ utilisateur_en_ligne.nom }}</dd>
+   <dt>Prénom :</dt>
+      <dd>{{ utilisateur_en_ligne.prenom }}</dd>
+   <dt>Date de naissance :</dt>
+      <dd>{{ utilisateur_en_ligne.date_naissance }}</dd>
+   <dt>Matricule :</dt>
+      <dd>{{ utilisateur_en_ligne.matricule }}</dd>
+   <dt>Courriel :</dt>
+      <dd>{{ utilisateur_en_ligne.email }}</dd>
+   <dt>Tél. fixe :</dt>
+      <dd>{{ utilisateur_en_ligne.home_phone_number }}</dd>
+   <dt>Tél. mobile :</dt>
+     <dd>{{ utilisateur_en_ligne.cellphone_number }}</dd>
+   <dt>Faculté :</dt>
+     <dd>{{ utilisateur_en_ligne.faculte.nom }}</dd>
+ {% if utilisateur_en_ligne.person_type == "student" %}
+   <dt>Cursus :</dt>
+   <dd>{{ utilisateur_en_ligne.cursus.title }}</dd>
+   <dt>Année :</dt>
+   <dd>{{ utilisateur_en_ligne.year }}</dd>
+ {% elif utilisateur_en_ligne.person_type == "employee" %}
+   <dt>Bureau :</dt>
+   <dd>{{ utilisateur_en_ligne.office }}</dd>
+   <dt>Campus :</dt>
+   <dd>{{ utilisateur_en_ligne.campus.name }}</dd>
+   <dt>Fonction :</dt>
+   <dd>{{ utilisateur_en_ligne.job.title }}</dd>
+ {% endif %}
+</dl>
+<p id="showProfileNavigationButtons">
+   <a href="welcome" class="buttonLink">Retour</a>
+</p>
+{% endblock %}
