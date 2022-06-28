@@ -1,0 +1,81 @@
+{% extends "webapp/base.html" %}
+
+{% block title %} Profil {% endblock %}
+
+{% block bodyId %} showProfilePage {% endblock %}
+
+{% block headerContent %}
+<!-- -----------
+    (1) si l'utilisateur est connecté, affichez son nom et son prénom et le bouton 'Déconnexion'
+    (2) au cas contraire, affichez le bouton 'Connexion'
+    (3) Fermer la condition
+------------- -->
+                <!-- 1 --->
+{% if request.user %}
+
+    <p> <a href="{% url 'connexion' %}"> Déconnexion </a> </p>
+    <p id="name">{{ utilisateur_en_ligne.prenom }} {{ utilisateur_en_ligne.nom }}</p>
+
+        <!-- 2 --->
+{% else %}
+
+    <p> <a href="{% url 'connexion' %}"> Connexion </a> </p>
+
+{% endif %}
+
+
+
+
+    <p id="function">
+        {% if logged_user.person_type == 'student' %}
+        Étudiant en
+            {% if logged_user.year == 1 %}
+                {{ logged_user.year }}ère
+            {% else %}
+                {{ logged_user.year }}ème
+            {% endif %}
+            {{ logged_user.cursus.title }}
+        {% else %}
+            {{ logged_user.job.title|capfirst }}
+            dans la faculté {{ logged_user.faculty }}
+        {% endif %}
+    </p>
+{% endblock %}
+
+{% block content %}
+<h1>Affichage d’un profil</h1>
+<dl class="fieldList">
+   <dt>Nom :</dt>
+      <dd>{{ utilisateur_en_ligne.nom }}</dd>
+   <dt>Prénom :</dt>
+      <dd>{{ utilisateur_en_ligne.prenom }}</dd>
+   <dt>Date de naissance :</dt>
+      <dd>{{ utilisateur_en_ligne.date_naissance }}</dd>
+   <dt>Matricule :</dt>
+      <dd>{{ utilisateur_en_ligne.matricule }}</dd>
+   <dt>Courriel :</dt>
+      <dd>{{ utilisateur_en_ligne.email }}</dd>
+   <dt>Tél. fixe :</dt>
+      <dd>{{ utilisateur_en_ligne.home_phone_number }}</dd>
+   <dt>Tél. mobile :</dt>
+     <dd>{{ utilisateur_en_ligne.cellphone_number }}</dd>
+   <dt>Faculté :</dt>
+     <dd>{{ utilisateur_en_ligne.faculte.nom }}</dd>
+ {% if utilisateur_en_ligne.person_type == "student" %}
+   <dt>Cursus :</dt>
+   <dd>{{ utilisateur_en_ligne.cursus.title }}</dd>
+   <dt>Année :</dt>
+   <dd>{{ utilisateur_en_ligne.year }}</dd>
+ {% elif utilisateur_en_ligne.person_type == "employee" %}
+   <dt>Bureau :</dt>
+   <dd>{{ utilisateur_en_ligne.office }}</dd>
+   <dt>Campus :</dt>
+   <dd>{{ utilisateur_en_ligne.campus.name }}</dd>
+   <dt>Fonction :</dt>
+   <dd>{{ utilisateur_en_ligne.job.title }}</dd>
+ {% endif %}
+</dl>
+<p id="showProfileNavigationButtons">
+   <a href=" ??? " class="buttonLink">Retour</a>
+</p>
+{% endblock %}

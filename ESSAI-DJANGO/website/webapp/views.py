@@ -1,6 +1,6 @@
-from django.contrib.auth.decorators import login_required
+
 from django.shortcuts import render, redirect
-from .forms import Form_Connexion, Form_Inscription
+from .forms import Form_Connexion, Form_Inscription, Form_Modification_Profile
 from .models import Utilisateur
 
 
@@ -41,7 +41,6 @@ def connexion(request):
 
 
 def inscription(request):
-
     if request.method == 'POST':
 
         form = Form_Inscription(request.POST)
@@ -89,16 +88,17 @@ def recherche_utilisateur_en_ligne(request):
 
 
 def deconnexion(request):
+
     del request.session['id_utilisateur_en_ligne']
 
-    return render(request, 'webapp/connexion.html')
+    return redirect(request, 'webapp/connexion.html')
 
 
-def donnees_profile(request):
 
+
+def affichage_profile(request):
     # Vérification que l'utilisateur est authentifié
     utilisateur_en_ligne = recherche_utilisateur_en_ligne(request)
-
     #
     if utilisateur_en_ligne:
 
@@ -111,23 +111,22 @@ def donnees_profile(request):
             if len(donnees) == 1:
 
                 if Utilisateur.objects.filter(id=id_donnees_profile):
-
                     donnees_profile = Utilisateur.objects.get(id=id_donnees_profile)
 
-                return render(request, 'webapp/donnees_profile.html', {'donnees_profile': donnees_profile})
+                return render(request, 'webapp/affichage_profile.html', {'donnees_profile': donnees_profile})
 
             else:
-                return render(request, 'webapp/donnees_profile.html', {'donnees_profile': utilisateur_en_ligne})
+                return render(request, 'webapp/affichage_profile.html', {'donnees_profile': utilisateur_en_ligne})
 
         else:
-            return render(request, 'webapp/donnees_profile.html', {'donnees_profile': utilisateur_en_ligne})
+            return render(request, 'webapp/affichage_profile.html', {'donnees_profile': utilisateur_en_ligne})
 
     else:
         return redirect('connexion')
 
 
+def modification_profile(request):
 
-def modify_profile(request):
     # Vérification que l'utilisateur est authentifié
     utilisateur_en_ligne = recherche_utilisateur_en_ligne(request)
     #
@@ -135,21 +134,38 @@ def modify_profile(request):
         #
         if len(request.POST) > 0:
             #
-            if type(logged_user) == Student:
+            if type(utilisateur_en_ligne) == Utilisateur:
                 #
-                form = StudentProfileForm(request.POST, instance=logged_user)
-            else:
-                form = EmployeeProfileForm(request.POST, instance=logged_user)
-            if form.is_valid:
-                form.save()
-                return redirect('welcome')
-            else:
-                return render(request, 'webapp/modify_profile.html', {'form': form})
+                form = Form_Modification_Profile(request.POST, instance=utilisateur_en_ligne)
+
+                if form.is_valid:
+                    form.save()
+                    return redirect('bienvenue')
         else:
-            if type(logged_user) == Student:
-                form = StudentProfileForm(instance=logged_user)
-            else:
-                form = EmployeeProfileForm(instance=logged_user)
-            return render(request, 'webapp/modify_profile.html', {'form': form})
+            form = Form_Modification_Profile(instance=utilisateur_en_ligne)
+            return render(request, 'webapp/modification_profile.html', {'form': form})
     else:
-        return redirect('login')
+        return redirect('connexion')
+
+
+def suppression_profile(request):
+
+    # Vérification que l'utilisateur est authentifié
+    utilisateur_en_ligne = recherche_utilisateur_en_ligne(request)
+    #
+    if utilisateur_en_ligne:
+        #
+        if len(request.POST) > 0:
+            #
+            if type(utilisateur_en_ligne) == Utilisateur:
+                #
+                form = Form_Suppression_Profile(request.POST, instance=utilisateur_en_ligne)
+
+                if form.is_valid:
+                    form.save()
+                    return redirect('bienvenue')
+        else:
+            form = Form_Modification_Profile(instance=utilisateur_en_ligne)
+            return render(request, 'webapp/suppression_profile.html', {'form': form})
+    else:
+        return redirect('connexion')

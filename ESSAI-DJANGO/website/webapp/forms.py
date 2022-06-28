@@ -47,3 +47,11 @@ class Form_Inscription(forms.ModelForm):
     class Meta:
         model = Utilisateur
         fields = '__all__'
+
+
+class Form_Modification_Profile(forms.ModelForm):
+
+    class Meta:
+        # Table dont on converti en formulaire
+        model = Utilisateur
+        fields = '__all__'
