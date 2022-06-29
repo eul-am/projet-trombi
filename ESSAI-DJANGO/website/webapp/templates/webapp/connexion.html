@@ -2,14 +2,13 @@
 
 {% block title %} Connexion {% endblock %}
 
-{% block bodyId %}loginPage{% endblock %}
+{% block bodyId %} loginPage {% endblock %}
 
 {% block content %}
-	<form method="POST">
+
+	<form action="connexion" method="POST">
 
 		{% csrf_token %} <!-- MESURE DE SÉCURITÉ -->
-
-		<h1> Connexion </h1>
 
 		{% if error %}
 			<p>{{ error }}</p>  <!-- MESSAGE D'ERREURS -->
@@ -22,4 +21,5 @@
  			<a href=" {% url 'inscription' %} ">S'inscrire</a>
  		</p>
 	</form>
+
 {% endblock %}

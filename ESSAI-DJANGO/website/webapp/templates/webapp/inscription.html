@@ -2,14 +2,12 @@
 
 {% block title %} Inscription {% endblock %}
 
-{% block bodyId %}registerPage{% endblock %}
+{% block bodyId %}PageInscription{% endblock %}
 
 {% block content %}
 	<form method="POST">
 
 		{% csrf_token %} <!-- MESURE DE SÉCURITÉ -->
-
-		<h1> Inscription </h1>
 
 		{% if error %}
 			<p>{{ error }}</p>  <!-- MESSAGE D'ERREURS -->
@@ -18,8 +16,8 @@
 		{{form.as_p}} <!-- FORMULAIRE -->
 
 		<p>
- 			<input type="submit" value="S'inscrire"/>
- 			<a href=" {% url 'connexion' %}">Connexion</a>
+ 			<input type="submit" value="Créer un compte"/>
+ 			<a href=" {% url 'connexion' %}">Se connecter</a>
  		</p>
 	</form>
 {% endblock %}

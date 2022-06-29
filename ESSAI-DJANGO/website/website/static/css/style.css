@@ -1,0 +1,138 @@
+
+header
+{
+  /*positionne le formulaire tout en haut à gauche*/
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 80px;
+  width: 100%;
+  background: #3b5998 url() no-repeat 50px 25px;
+  border-bottom: solid 1px #133783;
+}
+
+body
+{
+   margin: 0px;
+   padding: 0px;
+   font-family: 'Lucida Grande', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   font-size: 11px;
+   color: #000333; 
+}
+
+body#loginPage section#content
+{
+  position: absolute;
+  top: 150px;
+  left: 50%;
+  width: 500px;
+  margin: 0 0 0 -250px;
+  padding: 0px;
+}
+
+
+
+/* PAGE DE CONNEXION -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+form label
+{
+  /*disposer les boîtes des labels au dessus de celles des input, en block*/
+  display: block;
+  /*lageur des boites (contenant le) label (le titre)*/
+  width: 150px;
+  /*faire flotter chaque champ de saisie input à côté (droite) de son label*/
+  float:left;
+  /*les titres (labels) se mettent côte à côte des champs de saisie input*/
+  text-align: right;
+  /* on agrandi l'espace à l'intérieur de la boîte contenant le label*/
+  padding: 4px 10px 0 0;
+ 
+}
+
+form input[type='email'], form input[type='text'], form input[type='password']
+{
+  display: block;
+  /*largeur des champs de saisie*/
+  width: 250px;
+  /* espacement intérieur des boîtes*/
+  padding: 2px;
+}
+
+form input[type='submit']
+{
+  /*le champ input (bouton connexion) se décale un peu plus de son label*/
+  margin: 0 20px 0 160px;
+  border-style: solid;
+  border-width: 1px;
+  /* les bordures de gauche et du dessus sont en blanc
+      celles du bas et de droite sont en bleu */
+  border-color: #d9dfea #0e1f5b #0e1f5b #d9dfea;
+  /*couleur d'arrière-plan du bouton d'envoie*/
+  background-color: #3b5998;
+  /**/
+  color: #FFFFFF;
+  /* gauche - haut - bas - droite */
+  padding: 2px 15px 3px 15px;
+  /* le texte s'aligne au centre*/
+  text-align: center;
+
+}
+
+a
+{
+   color : #3b5998;
+}
+
+
+
+/* MESSAGE D'ERREUR dans les formulaires -----------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+ul.errorlist
+{
+  /*NB : dans Django, les messages d'erreurs sont des listes 'ul' de classe 'errorlist'*/
+
+  margin-left: 160px;
+  /**/
+  padding: 0px;
+  /*on retire les puces des messages d'erreurs*/
+  list-style-type: none;
+  /*couleur des messages d'erreurs*/
+  color: #d23d24;
+}
+
+
+
+/* PAGE D'INSCRIPTION -----------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+body#PageInsription section#contenu
+{
+  position: absolute;
+  top: 110px;
+  left: 50%;
+  width: 500px;
+  margin: 0 0 0 -250px;
+  padding: 0px;
+}
+
+
+body#PageConnexion section#contenu
+{
+  
+  top: 150px;
+  
+}
+
+
+h1
+{
+  text-align: center;
+  font-size: 22px;
+  margin: 0px 60px 30px 60px;
+  color: #3b5998;
+  border-bottom: 1px solid #3b5998;
+}
+
+

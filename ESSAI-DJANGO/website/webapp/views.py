@@ -1,11 +1,7 @@
-
 from django.shortcuts import render, redirect
-from .forms import Form_Connexion, Form_Inscription, Form_Modification_Profile
+from .forms import Form_Connexion, Form_Modification_Profile, Form_Profile_Employe
 from .models import Utilisateur
 
-
-# décorateur : Si l’utilisateur est connecté, il exécute la vue normalement.
-# Le code de la vue peut légitimement considérer l’utilisateur comme connecté.
 
 def connexion(request):
     # dès que l'utilisateur (nous) envoie ses données (4)
@@ -40,10 +36,13 @@ def connexion(request):
         return render(request, 'webapp/connexion.html', {'form': form})
 
 
+        # INSCRIPTION EMPLOYÉ -----------------------------------------------------------------------------------------
+
+
 def inscription(request):
     if request.method == 'POST':
 
-        form = Form_Inscription(request.POST)
+        form = Form_Profile_Employe(request.POST)
 
         if form.is_valid():
             form.save()
@@ -51,12 +50,14 @@ def inscription(request):
             return redirect('connexion')
 
         else:
-            return render(request, 'webapp/inscription.html', {'form': form})
+            return render(request, 'webapp/profile_utilisateur.html', {'form': form})
     else:
 
-        form = Form_Inscription()
+        form = Form_Profile_Employe()
 
-        return render(request, 'webapp/inscription.html', {'form': form})
+        return render(request, 'webapp/profile_utilisateur.html', {'form': form})
+
+        # -------------------------------------------------------------------------------------------------------------
 
 
 def bienvenue(request):
@@ -68,6 +69,8 @@ def bienvenue(request):
 
     else:
         return redirect('connexion')
+
+        # -------------------------------------------------------------------------------------------------------------
 
 
 def recherche_utilisateur_en_ligne(request):
@@ -86,14 +89,15 @@ def recherche_utilisateur_en_ligne(request):
     else:
         return None
 
+        # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 def deconnexion(request):
-
     del request.session['id_utilisateur_en_ligne']
 
     return redirect(request, 'webapp/connexion.html')
 
-
+    # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 def affichage_profile(request):
@@ -124,9 +128,10 @@ def affichage_profile(request):
     else:
         return redirect('connexion')
 
+        # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 def modification_profile(request):
-
     # Vérification que l'utilisateur est authentifié
     utilisateur_en_ligne = recherche_utilisateur_en_ligne(request)
     #
@@ -147,9 +152,10 @@ def modification_profile(request):
     else:
         return redirect('connexion')
 
+        # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 def suppression_profile(request):
-
     # Vérification que l'utilisateur est authentifié
     utilisateur_en_ligne = recherche_utilisateur_en_ligne(request)
     #
@@ -169,3 +175,5 @@ def suppression_profile(request):
             return render(request, 'webapp/suppression_profile.html', {'form': form})
     else:
         return redirect('connexion')
+
+        # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------

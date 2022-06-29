@@ -1,8 +1,11 @@
 from django import forms
-from .models import Utilisateur
+from .models import Employe, Utilisateur
 
 
-class Form_Connexion(forms.ModelForm):
+        # ------------------------------------------------------------------------------------------
+
+
+class Form_Connexion(forms.Form):
     email = forms.EmailField(label='Courriel')
     password = forms.CharField(label='Mot de passe', widget=forms.PasswordInput)
 
@@ -19,18 +22,20 @@ class Form_Connexion(forms.ModelForm):
                 raise forms.ValidationError("Adresse de courriel ou mot de passe erroné.")
         return cleaned_data
 
-    class Meta:
-        model = Utilisateur
-        exclude = ('nom', 'prenom', 'sexe',)
+        # NB : les formulaires de type (forms.Form) ne prennent pas de classe Meta
 
 
-class Form_Inscription(forms.ModelForm):
+
+        # FORMULAIRE D'INSCRIPTION ET DE PROFIL EMPLOYÉ -------------------------------------------------------------------------------------------------------------------------------------
+
+
+class Form_Profile_Employe(forms.ModelForm):
     email = forms.EmailField(label='Courriel')
     password = forms.CharField(label='Mot de passe', widget=forms.PasswordInput)
 
     def clean(self):
         # nettoyage des données du formulaire d'inscription
-        cleaned_data = super(Form_Inscription, self).clean()
+        cleaned_data = super(Form_Profile_Employe, self).clean()
         #
         email = cleaned_data.get("email")
         # si l'email a bien été saisi
@@ -45,8 +50,12 @@ class Form_Inscription(forms.ModelForm):
         return cleaned_data
 
     class Meta:
-        model = Utilisateur
-        fields = '__all__'
+        model = Employe
+        exclude = ('amis',)
+
+
+        # -------------------------------------------------------------------------------------------
+
 
 
 class Form_Modification_Profile(forms.ModelForm):
@@ -55,3 +64,8 @@ class Form_Modification_Profile(forms.ModelForm):
         # Table dont on converti en formulaire
         model = Utilisateur
         fields = '__all__'
+
+
+        # -------------------------------------------------------------------------------------------
+
+
