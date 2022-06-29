@@ -1,0 +1,184 @@
+{% extends "webapp/base.html" %}
+
+{% block title %} Création d'un profil {% endblock %}
+
+{% block bodyId %} userProfilPage {% endblock %}
+
+{% block content %}
+
+	<h1> Création d'un compte </h1>
+
+<!-- FORMULAIRE BOUTONS SELECT --------------------------------------------------------------------------------->
+
+<form>
+ 	<p>
+ 		<label for="typeProfile">Vous êtes :</label>
+ 		<select id="typeProfile">
+ 			<option value="etudiant" {% if formEt.is_bound %} selected="selected" {% endif %}>Étudiant</option>
+ 			<option value="employe" {% if formEm.is_bound %} selected="selected" {% endif %}>Employé</option>
+ 		</select>
+ 	</p>
+</form>
+
+<!-- FORMULAIRE INSCRIPTION ÉTUDIANT --------------------------------------------------------------------------------->
+
+	<form method="POST" id="formEtudiant">
+
+		{% csrf_token %} <!-- MESURE DE SÉCURITÉ -->
+
+		{% if error %}
+			<p>{{ error }}</p>  <!-- MESSAGE D'ERREURS -->
+		{% endif %}
+
+		{{formEt.as_p}} <!-- FORMULAIRE -->
+
+		<p>
+ 			<input type="hidden" name="typeProfile" value="etudiant" />
+ 			<input type="submit" value="Créer un compte" />
+ 		</p>
+	</form>
+
+<!-- FORMULAIRE INSCRIPTION EMPLOYÉ --------------------------------------------------------------------------------->
+
+	<form method="POST" id="formEmploye">
+
+		{% csrf_token %} <!-- MESURE DE SÉCURITÉ -->
+
+		{% if error %}
+			<p>{{ error }}</p>  <!-- MESSAGE D'ERREURS -->
+		{% endif %}
+
+		{{formEm.as_p}} <!-- FORMULAIRE -->
+
+		<p>
+ 			<input type="hidden" name="typeProfile" value="etudiant" />
+ 			<input type="submit" value="Créer un compte" />
+ 		</p>
+	</form>
+
+<!-- FONCTION JAVASCRIPT --------------------------------------------------------------------------------------------->
+
+<script type="text/javascript">
+ function displayRightForm() {
+ 	if ($('#typeProfile').val() == 'etudiant') {
+ 		$('#formEmploye').hide();
+ 		$('#formEtudiant').show();
+	 }
+ 	else {
+ 		$('#formEtudiant').hide();
+ 		$('#formEmploye').show();
+ 	}
+ }
+ $(document).ready(displayRightForm);
+ $('#typeProfile').change(displayRightForm);
+
+</script>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# TABLE MESSAGE -------------------------------------------------------------------------------------------------------
+
+class Message(models.Model):
+    # Clé étrangère : relation (liaison) 1,n (l'auteur d'un message est d'abord un utilisateur)
+    # l'héritage ici peut se faire avec les côtes
+    auteur = models.ForeignKey('Utilisateur', on_delete=models.CASCADE)
+    contenu = models.TextField()
+    date_de_publication = models.DateField()
+
+    def __str__(self):
+        if len(self.contenu) > 20:
+            return self.contenu[:19] + "..."
+        else:
+            return self.contenu
+
+
+# TABLE ÉCOLE ------------------------------------------------------------------------------------------------------
+
+class Ecole(models.Model):
+    nom = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.nom
+
+
+# TABLE CURSUS ------------------------------------------------------------------------------------------------------
+
+class Cursus(models.Model):
+    titre = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.titre
+
+
+# TABLE POSTE ---------------------------------------------------------------------------------------------------------
+
+class Poste(models.Model):
+    titre = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.titre
+
+
+# TABLE EMPLOYÉ -------------------------------------------------------------------------------------------------------
+
+class Employe(Utilisateur): # NB: l'héritage en classe se fait sans les côtes
+    service = models.CharField(max_length=30)
+    # Clé étrangère : relation 1,n
+    poste = models.ForeignKey('Poste', default=None, null=True, on_delete=models.CASCADE)
+    # attribut permettant de connaître le type de d'utilisateur connecté
+    type_utilisateur = 'employe'
+
+    def __str__(self):
+        return self.service
+
+
+# TABLE ÉTUDIANT ------------------------------------------------------------------------------------------------------
+
+class Etudiant(Utilisateur):
+    # Clé étrangère : relation 1,n
+    cursus = models.ForeignKey('Cursus', default=None, null=True, on_delete=models.CASCADE)
+    annee = models.IntegerField()
+    # attribut permettant de connaître le type de d'utilisateur connecté
+
+    type_utilisateur = 'etudiant'
+
+    def __str__(self):
+        return self.annee
+
+
+
+
+
+class Utilisateur(models.Model):
+    CHOIX_SEXE = [
+        ('H', 'HOMME'),
+        ('F', 'FEMME'),
+    ]
+    nom = models.CharField(max_length=30)
+    prenom = models.CharField(max_length=30)
+    sexe = models.CharField(max_length=30, choices=CHOIX_SEXE)
+    email = models.EmailField()
+    # Dans un cas reel, nous ne devrions pas stocker le mot de passe en clair.
+    password = models.CharField(max_length=32)
+    # clé étrangères : relation n,n - plusieurs à plusieurs -
+    amis = models.ManyToManyField('self')
+    # Clé étrangère : relation 1,n
+    ecole = models.ForeignKey('Ecole', default=None, null=True, on_delete=models.CASCADE)
+    type_utilisateur = 'generic'

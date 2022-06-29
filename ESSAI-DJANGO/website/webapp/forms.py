@@ -1,8 +1,8 @@
 from django import forms
-from .models import Employe, Utilisateur
+from .models import Utilisateur
 
 
-        # ------------------------------------------------------------------------------------------
+# FORMULAIRE DE CONNEXION ---------------------------------------------------------------------------------------------
 
 
 class Form_Connexion(forms.Form):
@@ -25,17 +25,17 @@ class Form_Connexion(forms.Form):
         # NB : les formulaires de type (forms.Form) ne prennent pas de classe Meta
 
 
+# FORMULAIRE D'INSCRIPTION ET DE PROFIL EMPLOYÉ -----------------------------------------------------------------------
 
-        # FORMULAIRE D'INSCRIPTION ET DE PROFIL EMPLOYÉ -------------------------------------------------------------------------------------------------------------------------------------
 
+class Form_Inscription(forms.ModelForm):
 
-class Form_Profile_Employe(forms.ModelForm):
     email = forms.EmailField(label='Courriel')
     password = forms.CharField(label='Mot de passe', widget=forms.PasswordInput)
 
     def clean(self):
         # nettoyage des données du formulaire d'inscription
-        cleaned_data = super(Form_Profile_Employe, self).clean()
+        cleaned_data = super(Form_Inscription, self).clean()
         #
         email = cleaned_data.get("email")
         # si l'email a bien été saisi
@@ -50,22 +50,43 @@ class Form_Profile_Employe(forms.ModelForm):
         return cleaned_data
 
     class Meta:
-        model = Employe
-        exclude = ('amis',)
+        model = Utilisateur
+        fields = '__all__'
 
 
-        # -------------------------------------------------------------------------------------------
+# FORMULAIRE D'INSCRIPTION ET DE PROFIL EMPLOYÉ ----------------------------------------------------------------------
+
+class Form_Inscription_Employe(forms.ModelForm):
+
+    email = forms.EmailField(label='Courriel')
+    password = forms.CharField(label='Mot de passe', widget=forms.PasswordInput)
+
+    def clean(self):
+        # nettoyage des données du formulaire d'inscription
+        cleaned_data = super(Form_Inscription_Employe, self).clean()
+        #
+        email = cleaned_data.get("email")
+        # si l'email a bien été saisi
+        if email:
+            # on compte le nombre d'email saisie par l'utilisateur
+            email = Utilisateur.objects.filter(email=email).count()
+            # s'il y en a plus de zéro, ça veut dire que l'email existe
+            if email > 0:
+                # et il faut le signaler
+                raise forms.ValidationError("Compte existant.")
+            # sinon, il faut retourner les données nettoyées
+        return cleaned_data
+
+    class Meta:
+        model = Utilisateur
+        fields = '__all__'
 
 
 
 class Form_Modification_Profile(forms.ModelForm):
-
     class Meta:
         # Table dont on converti en formulaire
         model = Utilisateur
         fields = '__all__'
 
-
         # -------------------------------------------------------------------------------------------
-
-

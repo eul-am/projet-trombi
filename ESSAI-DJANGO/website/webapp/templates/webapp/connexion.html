@@ -6,7 +6,7 @@
 
 {% block content %}
 
-	<form action="connexion" method="POST">
+	<form method="POST">
 
 		{% csrf_token %} <!-- MESURE DE SÉCURITÉ -->
 
@@ -17,8 +17,8 @@
 		{{form.as_p}} <!-- FORMULAIRE -->
 
 		<p>
- 			<input type="submit" value="Connexion"/>
- 			<a href=" {% url 'inscription' %} ">S'inscrire</a>
+ 			<input type="submit" value="Se connecter"/>
+ 			<a href=" {% url 'inscription' %} "> Créer un compte </a>
  		</p>
 	</form>
 

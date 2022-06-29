@@ -13,12 +13,16 @@ header
 
 body
 {
-   margin: 0px;
-   padding: 0px;
+   margin: 0;
+   padding: 0;
    font-family: 'Lucida Grande', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
    font-size: 11px;
    color: #000333; 
 }
+
+
+/* PAGE DE CONNEXION -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
 
 body#loginPage section#content
 {
@@ -27,12 +31,8 @@ body#loginPage section#content
   left: 50%;
   width: 500px;
   margin: 0 0 0 -250px;
-  padding: 0px;
+  padding: 0;
 }
-
-
-
-/* PAGE DE CONNEXION -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 
 form label
@@ -106,8 +106,8 @@ ul.errorlist
 
 /* PAGE D'INSCRIPTION -----------------------------------------------------------------------------------------------------------------------------------------------------*/
 
-
-body#PageInsription section#contenu
+/* s'applique à toutes les sections */
+body section#content
 {
   position: absolute;
   top: 110px;
@@ -118,7 +118,7 @@ body#PageInsription section#contenu
 }
 
 
-body#PageConnexion section#contenu
+body#loginPage section#content
 {
   
   top: 150px;

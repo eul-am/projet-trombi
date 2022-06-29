@@ -1,45 +1,18 @@
 {% extends "webapp/base.html" %}
 
-{% block title %} Bienvenue {% endblock %}
+{% block title %} Accueil {% endblock %}
 
-{% block bodyId %} PageDeBienvenue {% endblock %}
+{% block bodyId %} welcomePage {% endblock %}
 
 {% block headerContent %}
-<!-- -----------
-    (1) si l'utilisateur est connecté, affichez son nom et son prénom et le bouton 'Déconnexion'
-    (2) au cas contraire, affichez le bouton 'Connexion'
-    (3) Fermer la condition
-------------- -->
-                <!-- 1 --->
-{% if request.user %}
-
-    <p> <a href="{% url 'connexion' %}"> Déconnexion </a> </p>
-    <p id="name">{{ utilisateur_en_ligne.prenom }} {{ utilisateur_en_ligne.nom }}</p>
-
+    <p id="nom">{{ utilisateur_en_ligne.prenom }} {{ utilisateur_en_ligne.nom }}</p>
+    <p id=""> <a href="{% url 'connexion' %}"> Déconnexion </a> </p>
         <!-- 2 --->
-{% else %}
-
     <p> <a href="{% url 'connexion' %}"> Connexion </a> </p>
 
-{% endif %}
 
 
 
-
-    <p id="function">
-        {% if logged_user.person_type == 'student' %}
-        Étudiant en
-            {% if logged_user.year == 1 %}
-                {{ logged_user.year }}ère
-            {% else %}
-                {{ logged_user.year }}ème
-            {% endif %}
-            {{ logged_user.cursus.title }}
-        {% else %}
-            {{ logged_user.job.title|capfirst }}
-            dans la faculté {{ logged_user.faculty }}
-        {% endif %}
-    </p>
     <!-- ----------- LIENS PROFIL ------------- -->
     <p id="profileLinks">
         <a href="???" class="buttonLink">Voir le profil</a>

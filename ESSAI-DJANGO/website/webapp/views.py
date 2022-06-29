@@ -1,7 +1,9 @@
 from django.shortcuts import render, redirect
-from .forms import Form_Connexion, Form_Modification_Profile, Form_Profile_Employe
+from .forms import Form_Connexion, Form_Modification_Profile, Form_Inscription
 from .models import Utilisateur
 
+
+# CONNEXION -----------------------------------------------------------------------------------------------------------
 
 def connexion(request):
     # dès que l'utilisateur (nous) envoie ses données (4)
@@ -36,13 +38,13 @@ def connexion(request):
         return render(request, 'webapp/connexion.html', {'form': form})
 
 
-        # INSCRIPTION EMPLOYÉ -----------------------------------------------------------------------------------------
-
+# INSCRIPTION EMPLOYÉ -------------------------------------------------------------------------------------------------
 
 def inscription(request):
+
     if request.method == 'POST':
 
-        form = Form_Profile_Employe(request.POST)
+        form = Form_Inscription(request.POST)
 
         if form.is_valid():
             form.save()
@@ -50,17 +52,21 @@ def inscription(request):
             return redirect('connexion')
 
         else:
+
+            form = Form_Inscription()
+
             return render(request, 'webapp/profile_utilisateur.html', {'form': form})
     else:
 
-        form = Form_Profile_Employe()
+        form = Form_Inscription()
 
         return render(request, 'webapp/profile_utilisateur.html', {'form': form})
 
-        # -------------------------------------------------------------------------------------------------------------
+# -------------------------------------------------------------------------------------------------------------
 
 
 def bienvenue(request):
+
     utilisateur_en_ligne = recherche_utilisateur_en_ligne(request)
 
     if utilisateur_en_ligne:
@@ -70,9 +76,7 @@ def bienvenue(request):
     else:
         return redirect('connexion')
 
-        # -------------------------------------------------------------------------------------------------------------
-
-
+        # ------------------------------------------------------------------------------------------------------------
 def recherche_utilisateur_en_ligne(request):
     """Protection des pages privées"""
 
@@ -98,7 +102,6 @@ def deconnexion(request):
     return redirect(request, 'webapp/connexion.html')
 
     # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
 
 def affichage_profile(request):
     # Vérification que l'utilisateur est authentifié
