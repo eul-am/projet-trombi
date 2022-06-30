@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import connexion, inscription, bienvenue, deconnexion, affichage_profile, modification_profile, \
-    suppression_profile
+    suppression_profile, ajouter_un_utilisateur, voir_profile_utilisateur
 
 urlpatterns = [
     # URL 'vide', appelé sans aucun nom de page
@@ -13,4 +13,6 @@ urlpatterns = [
     path('affichage_profile/', affichage_profile, name='affichage_profile'),
     path('modification_profile/', modification_profile, name='modification_profile'),
     path('suppression_profile/', suppression_profile, name='suppression_profile'),
+    path('ajouter_un_utilisateur/', ajouter_un_utilisateur, name='ajouter_un_utilisateur'),
+    path('voir_profile_utilisateur/', voir_profile_utilisateur, name='voir_profile_utilisateur'),
 ]

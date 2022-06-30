@@ -29,7 +29,6 @@ class Form_Connexion(forms.Form):
 
 
 class Form_Inscription(forms.ModelForm):
-
     email = forms.EmailField(label='Courriel')
     password = forms.CharField(label='Mot de passe', widget=forms.PasswordInput)
 
@@ -57,7 +56,6 @@ class Form_Inscription(forms.ModelForm):
 # FORMULAIRE D'INSCRIPTION ET DE PROFIL EMPLOYÉ ----------------------------------------------------------------------
 
 
-
 class Form_Modification_Profile(forms.ModelForm):
     class Meta:
         # Table dont on converti en formulaire
@@ -65,3 +63,21 @@ class Form_Modification_Profile(forms.ModelForm):
         fields = '__all__'
 
         # -------------------------------------------------------------------------------------------
+
+
+class AddFriendForm(forms.Form):
+
+    email = forms.EmailField(label='Courriel :')
+
+    def clean(self):
+        cleaned_data = super(AddFriendForm, self).clean()
+
+        email = cleaned_data.get("email")
+
+        # Vérifie que le champ est valide
+        if email:
+            result = Utilisateur.objects.filter(email=email)
+        if len(result) != 1:
+            raise forms.ValidationError("Adresse de courriel erronée.")
+
+        return cleaned_data

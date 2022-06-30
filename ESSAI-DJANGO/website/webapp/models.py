@@ -14,6 +14,7 @@ class Utilisateur(models.Model):
     email = models.EmailField()
     # Dans un cas reel, nous ne devrions pas stocker le mot de passe en clair.
     password = models.CharField(max_length=32)
+    type_personne = 'generic'
 
     def __str__(self):
         "Fonction permettant d'afficher le nom (intitulé) de l'objet en clair dans l'espace d'administration"

@@ -8,7 +8,14 @@
 
     {% block headerContent %}
         <p id="name">{{ utilisateur_en_ligne.prenom }} {{ utilisateur_en_ligne.nom }}</p>
-
+        <p id="function">
+            {% if utilisateur_en_ligne.type_personne == 'Utilisateur' %}
+            Étudiant en
+            {{ utilisateur_en_ligne.formation }}
+            {% else %}
+                {{ utilisateur_en_ligne.poste|capfirst }}
+            {% endif %}
+        </p>
         <p id="profileLinks">
             <a href="???" class="buttonLink">Voir le profil</a>
             <a href="???" class="buttonLink">Modifier le profil</a>
@@ -29,17 +36,17 @@
         <ul>
             {% for message in friendMessages %}
             <li>
-                <p><a href="showProfile?userToShow={{ message.author.id }}">
-                    {{ message.author.first_name }} {{ message.author.last_name }}</a> dit :
+                <p><a href="showProfile?userToShow={{ message.auteur.id }}">
+                    {{ message.auteur.prenom }} {{ message.auteur.nom }}</a> dit :
                 </p>
-                <p>{{ message.content }}</p>
+                <p>{{ message.contenu }}</p>
             </li>
             {% endfor %}
         </ul>
     </section>
 
     <section id="friendList">
-        <p class="title">Mes amis</p>
+        <p class="title">Mes collègues</p>
 
             <form action="bienvenue" method="get" class="inlineForm">
                 <input type="email" name="newFriend" id="newFriendInput" placeholder="Courriel" />
@@ -49,8 +56,8 @@
             <p><a href="???" class="buttonLink">Ajouter</a></p>
 
             <ul>
-            {% for friend in logged_user.friends.all %}
-                <li><a href="showProfile?userToShow={{ friend.id }}">{{ friend.first_name }} {{ friend.last_name }}</a></li>
+            {% for collegue in utilisateur_en_ligne.collegues.all %}
+                <li><a href="showProfile?userToShow={{ collegue.id }}">{{ collegue.prenom }} {{ collegue.nom }}</a></li>
             {% endfor %}
             </ul>
     </section>
