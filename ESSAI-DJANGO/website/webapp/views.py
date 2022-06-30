@@ -55,12 +55,12 @@ def inscription(request):
 
             form = Form_Inscription()
 
-            return render(request, 'webapp/profile_utilisateur.html', {'form': form})
+            return render(request, 'webapp/inscription.html', {'form': form})
     else:
 
         form = Form_Inscription()
 
-        return render(request, 'webapp/profile_utilisateur.html', {'form': form})
+        return render(request, 'webapp/inscription.html', {'form': form})
 
 # -------------------------------------------------------------------------------------------------------------
 

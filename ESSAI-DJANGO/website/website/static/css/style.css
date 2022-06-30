@@ -17,14 +17,14 @@ body
    padding: 0;
    font-family: 'Lucida Grande', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
    font-size: 11px;
-   color: #000333; 
+   color: #000333;
 }
 
 
 /* PAGE DE CONNEXION -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
 
 
-body#loginPage section#content
+body section#content
 {
   position: absolute;
   top: 150px;
@@ -47,7 +47,7 @@ form label
   text-align: right;
   /* on agrandi l'espace à l'intérieur de la boîte contenant le label*/
   padding: 4px 10px 0 0;
- 
+
 }
 
 form input[type='email'], form input[type='text'], form input[type='password']
@@ -76,7 +76,6 @@ form input[type='submit']
   padding: 2px 15px 3px 15px;
   /* le texte s'aligne au centre*/
   text-align: center;
-
 }
 
 a
@@ -86,7 +85,7 @@ a
 
 
 
-/* MESSAGE D'ERREUR dans les formulaires -----------------------------------------------------------------------------------------------------------------------------------------------------*/
+/* MESSAGE D'ERREUR dans les formulaires ---------------------------------------------------------------------------*/
 
 
 ul.errorlist
@@ -104,7 +103,7 @@ ul.errorlist
 
 
 
-/* PAGE D'INSCRIPTION -----------------------------------------------------------------------------------------------------------------------------------------------------*/
+/* PAGE D'INSCRIPTION -----------------------------------------------------------------------------------------------*/
 
 /* s'applique à toutes les sections */
 body section#content
@@ -114,15 +113,15 @@ body section#content
   left: 50%;
   width: 500px;
   margin: 0 0 0 -250px;
-  padding: 0px;
+  padding: 0;
 }
 
 
 body#loginPage section#content
 {
-  
+
   top: 150px;
-  
+
 }
 
 
@@ -135,4 +134,91 @@ h1
   border-bottom: 1px solid #3b5998;
 }
 
+
+/* PAGE DE BIENVENUE -----------------------------------------------------------------------------------------------*/
+
+header
+{
+  background: #3b5998 url() no-repeat 50px 25px;
+  color: #FFFFFF;
+}
+
+body header p#name
+{
+  font-size: 22px;
+  margin: 20px 0 0;
+}
+
+body header p#function
+{
+  margin: 0 0 0 70px;
+}
+
+body header p#profileLinks
+{
+  position: absolute;
+  right: 40px;
+  top: 25px;
+}
+
+a.buttonLink
+{
+  border-style: solid;
+  border-width: 1px;
+  border-color: #d9dfea #0e1f5b #0e1f5b #d9dfea;
+  background-color: #3b5998;
+  color: #FFFFFF;
+  padding: 2px 15px 3px 15px;
+  text-align: center;
+  text-decoration: none;
+}
+
+body section#content
+{
+  width: 800px;
+  margin: 0 0 0 -400px;
+}
+
+/* Liste des messages */
+
+body section#messageList
+{
+  position:absolute;
+  width: 600px;
+}
+
+
+/* Liste d'amis */
+
+body section#friendList
+{
+  position:absolute;
+  width: 200px;
+  right: 0;
+}
+
+
+/* PRÉSENTATION DE LA LISTE DES MESSAGES --------------------------------------------------------------------------------*/
+
+form.inlineForm label
+{
+  display: inline;
+  float: none;
+  padding: 0;
+}
+
+
+form.inlineForm input[type='text']
+{
+  /*positionne le bouton publier à droite de son input*/
+  display: inline-block;
+  /*positionne les boutons ajouter et publier sous l'input à gauche*/
+  margin: 0;
+}
+
+form.inlineForm input[type='submit']
+{
+  /*positionne les boutons ajouter et publier sous l'input à gauche*/
+  margin: 0;
+}
 

@@ -14,7 +14,6 @@ class Utilisateur(models.Model):
     email = models.EmailField()
     # Dans un cas reel, nous ne devrions pas stocker le mot de passe en clair.
     password = models.CharField(max_length=32)
-    type_utilisateur = 'generic'
 
     def __str__(self):
         "Fonction permettant d'afficher le nom (intitulé) de l'objet en clair dans l'espace d'administration"
@@ -38,12 +37,3 @@ class Message(models.Model):
 
 
 # TABLE EMPLOYÉ -------------------------------------------------------------------------------------------------------
-
-class Employe(Utilisateur):  # NB: l'héritage en classe se fait sans les côtes
-    service = models.CharField(max_length=30)
-    poste = models.CharField(max_length=30)
-    # attribut permettant de connaître le type de d'utilisateur connecté
-    type_utilisateur = 'employe'
-
-    def __str__(self):
-        return self.service

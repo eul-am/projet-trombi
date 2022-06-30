@@ -2,10 +2,13 @@
 
 {% block title %} Inscription {% endblock %}
 
-{% block bodyId %}PageInscription{% endblock %}
+{% block bodyId %}userProfilePage{% endblock %}
 
 {% block content %}
-	<form method="POST">
+
+	<h1> Création du compte </h1>
+
+	<form  method="POST">
 
 		{% csrf_token %} <!-- MESURE DE SÉCURITÉ -->
 
@@ -17,7 +20,7 @@
 
 		<p>
  			<input type="submit" value="Créer un compte"/>
- 			<a href=" {% url 'connexion' %}">Se connecter</a>
+ 			<a href=" ">Connexion</a>
  		</p>
 	</form>
 {% endblock %}

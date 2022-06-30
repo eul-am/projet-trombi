@@ -5,17 +5,23 @@
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <title> Django – {% block title %} Bienvenue {% endblock %} </title>
+        <title> Django – {% block title %}  {% endblock %} </title>
     </head>
-    <!-- -----------BODY avec un 'id' qui change en fonction des pages ------------- -->
-    <body  id="{% block bodyId %} genericPage {% endblock %}">
-        <!-- ----------- EN-TÊTE ------------- -->
+    
+    <body  id="{% block bodyId %}  {% endblock %}">
+        
         <header>
-            {% block headerContent %} {% endblock %}
+            {% block headerContent %} 
+            
+            {% endblock %}
         </header>
-        <!-- ----------- SECTION ------------- -->
+    
         <section id="content">
-            {% block content %} {% endblock %}
+            {% block content %} 
+            
+            
+            {% endblock %}
         </section>
+        
     </body>
 </html>

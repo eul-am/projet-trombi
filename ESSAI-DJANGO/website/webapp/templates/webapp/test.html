@@ -182,3 +182,86 @@ class Utilisateur(models.Model):
     # Clé étrangère : relation 1,n
     ecole = models.ForeignKey('Ecole', default=None, null=True, on_delete=models.CASCADE)
     type_utilisateur = 'generic'
+
+
+
+
+
+
+
+{% block headerContent %}
+    <p id="nom">{{ utilisateur_en_ligne.prenom }} {{ utilisateur_en_ligne.nom }}</p>
+    <p id=""> <a href="{% url 'connexion' %}"> Déconnexion </a> </p>
+        <!-- 2 --->
+    <p> <a href="{% url 'connexion' %}"> Connexion </a> </p>
+
+
+
+
+    <!-- ----------- LIENS PROFIL ------------- -->
+    <p id="profileLinks">
+        <a href="???" class="buttonLink">Voir le profil</a>
+        <a href="???" class="buttonLink">Modifier le profil</a>
+    </p>
+{% endblock %}
+
+{% block content %}
+    <section id="messageList">
+        <form action="bienvenue" method="get" class="inlineForm">
+            <label for="newMessageInput">Publier un message :</label>
+                <input type="text" name="newMessage" id="newMessageInput" />
+                <input type="submit" value="Publier" />
+        </form>
+
+        <ul>
+            {% for message in friendMessages %}
+            <li>
+                <p><a href="showProfile?userToShow={{ message.author.id }}">{{ message.author.first_name }} {{ message.author.last_name }}</a> dit :</p>
+                <p>{{ message.content }}</p>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section id="friendList">
+        <p class="title">Mes amis</p>
+
+        <form action="bienvenue" method="get" class="inlineForm">
+            <input type="email" name="newFriend" id="newFriendInput" placeholder="Courriel" />
+            <input type="submit" value="Ajouter" />
+        </form>
+
+        <p><a href="???" class="buttonLink">Ajouter</a></p>
+
+        <ul>
+        {% for friend in logged_user.friends.all %}
+            <li><a href="showProfile?userToShow={{ friend.id }}">{{ friend.first_name }} {{ friend.last_name }}</a></li>
+        {% endfor %}
+        </ul>
+    </section>
+
+<script type="text/javascript">
+    $(document).ready(function()
+    {
+        $("#friendList form").submit(addFriend);
+    });
+
+ function addFriend()
+{
+    $fieldValue = $("#newFriendInput").val();
+    $.ajax({
+        url: '/ajax/addFriend',
+        data: ({email : $fieldValue}),
+        type: 'GET',
+        success: function($data, $textStatus, $XMLHttpRequest) {
+            if ($data != '')
+            {
+             $('#friendList ul').prepend($data);
+            }
+           }
+        }
+        );
+ return false;
+}
+</script>
+{% endblock %}
