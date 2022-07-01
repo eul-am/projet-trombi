@@ -36,5 +36,4 @@ class Message(models.Model):
         else:
             return self.contenu
 
-
 # TABLE EMPLOYÉ -------------------------------------------------------------------------------------------------------

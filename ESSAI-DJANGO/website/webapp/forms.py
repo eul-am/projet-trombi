@@ -1,10 +1,6 @@
 from django import forms
 from .models import Utilisateur
 
-
-# FORMULAIRE DE CONNEXION ---------------------------------------------------------------------------------------------
-
-
 class Form_Connexion(forms.Form):
     email = forms.EmailField(label='Courriel')
     password = forms.CharField(label='Mot de passe', widget=forms.PasswordInput)
@@ -16,16 +12,18 @@ class Form_Connexion(forms.Form):
 
         if email and password:
             donnees = Utilisateur.objects.filter(password=password, email=email)
-            # si
+            # si l'un des deux identifiants n'est pas vrai (si l'un est mal écrit ou inexistant)
             if len(donnees) != 1:
-                # s'il existe,
+                # il faut dire ceci
                 raise forms.ValidationError("Adresse de courriel ou mot de passe erroné.")
+            # et si les deux sont faux (s'il n'existent pas)
+            elif len(donnees) == 0:
+                # il faut dire au client
+                raise forms.ValidationError('Compte inexistant')
+
         return cleaned_data
 
         # NB : les formulaires de type (forms.Form) ne prennent pas de classe Meta
-
-
-# FORMULAIRE D'INSCRIPTION ET DE PROFIL EMPLOYÉ -----------------------------------------------------------------------
 
 
 class Form_Inscription(forms.ModelForm):
@@ -53,31 +51,33 @@ class Form_Inscription(forms.ModelForm):
         fields = '__all__'
 
 
-# FORMULAIRE D'INSCRIPTION ET DE PROFIL EMPLOYÉ ----------------------------------------------------------------------
-
-
-class Form_Modification_Profile(forms.ModelForm):
+class Form_Modif_Profile(forms.ModelForm):
     class Meta:
         # Table dont on converti en formulaire
         model = Utilisateur
         fields = '__all__'
 
-        # -------------------------------------------------------------------------------------------
 
-
-class AddFriendForm(forms.Form):
-
+class Form_Ajout_Utilisateur(forms.Form):
     email = forms.EmailField(label='Courriel :')
 
     def clean(self):
-        cleaned_data = super(AddFriendForm, self).clean()
+        cleaned_data = super(Form_Ajout_Utilisateur, self).clean()
 
         email = cleaned_data.get("email")
 
         # Vérifie que le champ est valide
         if email:
-            result = Utilisateur.objects.filter(email=email)
-        if len(result) != 1:
+            donnees = Utilisateur.objects.filter(email=email)
+        if len(donnees) != 1:
             raise forms.ValidationError("Adresse de courriel erronée.")
 
         return cleaned_data
+
+
+class Form_Supp_Profile(forms.ModelForm):
+
+    class Meta:
+        # Table dont on converti en formulaire
+        model = Utilisateur
+        fields = '__all__'

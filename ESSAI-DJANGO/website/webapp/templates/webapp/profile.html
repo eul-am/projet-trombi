@@ -1,0 +1,26 @@
+{% extends "webapp/base.html" %}
+
+{% block title %}Affichage d’un profil{% endblock %}
+
+{% block bodyId %}showProfilePage{% endblock %}
+
+{% block content %}
+
+<h1>Affichage d’un profil</h1>
+
+<dl class="fieldList">
+   <dt>Nom :</dt>
+      <dd>{{ utilisateur.nom }}</dd>
+   <dt>Prénom :</dt>
+      <dd>{{ utilisateur.prenom }}</dd>
+   <dt>Courriel :</dt>
+      <dd>{{ utilisateur.email }}</dd>
+   <dt>Poste :</dt>
+      <dd>{{ utilisateur.poste }}</dd>
+</dl>
+
+<p id="showProfileNavigationButtons">
+   <a href="bienvenue" class="buttonLink">Retour</a>
+</p>
+
+{% endblock %}

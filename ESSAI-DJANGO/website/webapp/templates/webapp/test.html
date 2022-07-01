@@ -80,6 +80,31 @@
 
 
 
+def voir_profile_utilisateur(request):
+    utilisateur_en_ligne = rechercheutilisateur_en_ligne(request)
+    if utilisateur_en_ligne:
+
+        if 'utilisateurAvoir' in request.POST and request.POST['utilisateurAvoir'] != '':
+
+            id_utilisateur_a_voir = int(request.POST['utilisateurAvoir'])
+
+            donnees = Utilisateur.objects.filter(id=id_utilisateur_a_voir)
+
+            if len(donnees) == 1:
+                utilisateur_a_voir = Utilisateur.objects.get(id=id_utilisateur_a_voir)
+
+                return render(request, 'webapp/voir_profile_utilisateur.html',
+                              {'utilisateur_a_voir': utilisateur_a_voir})
+
+            else:
+                return render(request, 'webapp/voir_profile_utilisateur.html',
+                              {'utilisateur_a_voir': utilisateur_en_ligne})
+                # Le paramètre n’a pas été trouvé
+        else:
+            return render(request, 'webapp/voir_profile_utilisateur.html', {'utilisateur_a_voir': utilisateur_en_ligne})
+    else:
+        return redirect('connexion')
+
 
 
 

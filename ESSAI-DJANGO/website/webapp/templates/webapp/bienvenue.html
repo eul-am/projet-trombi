@@ -4,10 +4,12 @@
 
 {% block bodyId %} welcomePage {% endblock %}
 
+{% load static %}
                            
 
     {% block headerContent %}
-        <p id="name">{{ utilisateur_en_ligne.prenom }} {{ utilisateur_en_ligne.nom }}</p>
+        <img src="{% static 'image/logo.png' %}" height="100" width="200">
+        <p id="name" style="color: black;">{{ utilisateur.prenom }} {{ utilisateur.nom }}</p>
         <p id="function">
             {% if utilisateur_en_ligne.type_personne == 'Utilisateur' %}
             Étudiant en
@@ -17,8 +19,8 @@
             {% endif %}
         </p>
         <p id="profileLinks">
-            <a href="???" class="buttonLink">Voir le profil</a>
-            <a href="???" class="buttonLink">Modifier le profil</a>
+            <a href="{% url 'profile' %}" class="buttonLink">Voir le profil</a>
+            <a href="{% url 'modification_profile' %}" class="buttonLink">Modifier le profil</a>
         </p>
     {% endblock %}
 
@@ -48,8 +50,8 @@
     <section id="friendList">
         <p class="title">Mes collègues</p>
 
-            <form action="bienvenue" method="get" class="inlineForm">
-                <input type="email" name="newFriend" id="newFriendInput" placeholder="Courriel" />
+            <form action="bienvenue" method="POST" class="inlineForm">
+                <!--<input type="email" name="newFriend" id="newFriendInput" placeholder="Courriel" /> -->
                 <input type="submit" value="Ajouter" />
             </form>
 

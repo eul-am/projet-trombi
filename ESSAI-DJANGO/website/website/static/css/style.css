@@ -7,7 +7,7 @@ header
   top: 0;
   height: 80px;
   width: 100%;
-  background: #3b5998 url() no-repeat 50px 25px;
+  background: #3b5998 url('../image/logo.png') no-repeat 50px 25px;
   border-bottom: solid 1px #133783;
 }
 
@@ -21,7 +21,7 @@ body
 }
 
 
-/* PAGE DE CONNEXION -----------------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+/* PAGE DE CONNEXION -----------------------------------------------------------------------------------------------*/
 
 
 body section#content
@@ -198,7 +198,7 @@ body section#friendList
 }
 
 
-/* PRÉSENTATION DE LA LISTE DES MESSAGES --------------------------------------------------------------------------------*/
+/* PRÉSENTATION DE LA LISTE DES MESSAGES ---------------------------------------------------------------------------*/
 
 form.inlineForm label
 {
@@ -240,7 +240,7 @@ section#messageList ul li p
     margin: 8px 0 0 0;
 }
 
-body#welcomePage section#friendList
+section#friendList
 {
  position: absolute;
  width: 180px;
@@ -269,4 +269,31 @@ section#friendList ul
 section#friendList ul li
 {
  margin: 0 0 5px 0;
+}
+
+
+/* PAGE PROFIL  --------------------------------------------------------------------------------*/
+
+dl.fieldList dt
+{
+    display: block;
+    width: 250px;
+    float: ;
+    text-align: right;
+    padding: 0 10px 0 0;
+    font-weight: bold;
+    border:solid red;
+}
+
+dl.fieldList dd
+{
+    display: block;
+    width: 450px;
+    padding 0px;
+    margin: 0 0 10px 0;
+}
+
+p#showProfileNavigationButtons
+{
+    margin: 20px 0 0 260px;
 }

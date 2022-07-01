@@ -1,11 +1,9 @@
 from datetime import date
 
 from django.shortcuts import render, redirect
-from .forms import Form_Connexion, Form_Modification_Profile, Form_Inscription, AddFriendForm
+from .forms import Form_Connexion, Form_Modif_Profile, Form_Inscription, Form_Ajout_Utilisateur, Form_Supp_Profile
 from .models import Utilisateur, Message
 
-
-# CONNEXION -----------------------------------------------------------------------------------------------------------
 
 def connexion(request):
     # dès que l'utilisateur (nous) envoie ses données (4)
@@ -19,10 +17,10 @@ def connexion(request):
             email = form.cleaned_data['email']
 
             # on récupère l'email existant dans la base de données et on le compare avec celui saisi par l'utilisateur
-            utilisateur_en_ligne = Utilisateur.objects.get(email=email)
+            utilisateur = Utilisateur.objects.get(email=email)
 
-            # On cré la session
-            request.session['id_utilisateur_en_ligne'] = utilisateur_en_ligne.id
+            # On ouvre la session (de l') utilisateur
+            request.session['utilisateur'] = utilisateur.id
 
             # on redirige l'utilisateur vers la page ...
             return redirect('bienvenue')
@@ -39,8 +37,6 @@ def connexion(request):
         # dont le contenu s'affiche dans cette vue (view.py) (2)
         return render(request, 'webapp/connexion.html', {'form': form})
 
-
-# INSCRIPTION EMPLOYÉ -------------------------------------------------------------------------------------------------
 
 def inscription(request):
     if request.method == 'POST':
@@ -64,129 +60,128 @@ def inscription(request):
         return render(request, 'webapp/inscription.html', {'form': form})
 
 
-# -------------------------------------------------------------------------------------------------------------
+def utilisateur_en_ligne(request):
+    """ fonction qui a pour rôle de vérifier si un utilisateur est authentifié;
+    elle récupère également l'utilisateur authentifié dans la base de données. """
 
-
-def bienvenue(request):
-    utilisateur_en_ligne = recherche_utilisateur_en_ligne(request)
-
-    if utilisateur_en_ligne:
-        if 'newMessage' in request.POST and request.POST['newMessage'] != '':
-            newMessage = Message(auteur=utilisateur_en_ligne,
-                                 contenu=request.POST['newMessage'],
-                                 date_de_publication=date.today())
-            newMessage.save()
-
-        friendMessages = Message.objects.filter(auteur=utilisateur_en_ligne).order_by('-date_de_publication')
-
-        return render(request, 'webapp/bienvenue.html', {'utilisateur_en_ligne': utilisateur_en_ligne,
-                                                         'friendMessages': friendMessages})
-
-    else:
-        return redirect('connexion')
-
-        # ------------------------------------------------------------------------------------------------------------
-
-
-def recherche_utilisateur_en_ligne(request):
-    """Protection des pages privées"""
-
-    if 'id_utilisateur_en_ligne' in request.session:
-
-        id_utilisateur_en_ligne = request.session['id_utilisateur_en_ligne']
-
-        if len(Utilisateur.objects.filter(id=id_utilisateur_en_ligne)) == 1:
-
-            return Utilisateur.objects.get(id=id_utilisateur_en_ligne)
-
+    # si l'utilisateur est (bien) connecté à la session
+    if 'utilisateur' in request.session:
+        # utilisateur est sa variable de session
+        utilisateur = request.session['utilisateur']
+        # si
+        if len(Utilisateur.objects.filter(id=utilisateur)) == 1:
+            # retournez le
+            return Utilisateur.objects.get(id=utilisateur)
+        # sinon,
         else:
+            # ne rien afficher
             return None
     else:
         return None
 
-        # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+def bienvenue(request):
+    # toujours initialiser la variable de session
+    utilisateur = utilisateur_en_ligne(request)
+    # si l'utilisateur est en ligne
+    if utilisateur:
+        if 'newMessage' in request.POST and request.POST['newMessage'] != '':
+            newMessage = Message(auteur=utilisateur,
+                                 contenu=request.POST['newMessage'],
+                                 date_de_publication=date.today())
+            newMessage.save()
 
-def deconnexion(request):
-    del request.session['id_utilisateur_en_ligne']
+        friendMessages = Message.objects.filter(auteur=utilisateur).order_by('-date_de_publication')
 
-    return redirect(request, 'webapp/connexion.html')
-
-    # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-def affichage_profile(request):
-    # Vérification que l'utilisateur est authentifié
-    utilisateur_en_ligne = recherche_utilisateur_en_ligne(request)
-    #
-    if utilisateur_en_ligne:
-
-        if 'donnees_profile' in request.POST and request.POST['donnees_profile'] != '':
-            #
-            id_donnees_profile = int(request.POST['donnees_profile'])
-            #
-            donnees = Utilisateur.objects.filter(id=id_donnees_profile)
-
-            if len(donnees) == 1:
-
-                if Utilisateur.objects.filter(id=id_donnees_profile):
-                    donnees_profile = Utilisateur.objects.get(id=id_donnees_profile)
-
-                return render(request, 'webapp/affichage_profile.html', {'donnees_profile': donnees_profile})
-
-            else:
-                return render(request, 'webapp/affichage_profile.html', {'donnees_profile': utilisateur_en_ligne})
-
-        else:
-            return render(request, 'webapp/affichage_profile.html', {'donnees_profile': utilisateur_en_ligne})
-
+        return render(request, 'webapp/bienvenue.html', {'utilisateur': utilisateur,
+                                                         'friendMessages': friendMessages})
+    # s'il n'est pas en ligne
     else:
         return redirect('connexion')
 
-        # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-def modification_profile(request):
+
+def deconnexion(request):
+    del request.session['utilisateur']
+
+    return redirect(request, 'webapp/connexion.html')
+
+
+def profile(request):
+    utilisateur = utilisateur_en_ligne(request)
+
+    # si l'utilisateur est en ligne
+    if utilisateur:
+        # si
+        if 'profile' in request.POST and request.POST['profile'] != '':
+            #
+            profile = int(request.POST['profile'])
+            #
+            donnees = Utilisateur.objects.filter(id=profile)
+
+            if len(donnees) == 1:
+
+                if Utilisateur.objects.filter(id=profile):
+                    profile = Utilisateur.objects.get(id=profile)
+
+                return render(request, 'webapp/profile.html', {'profile': profile})
+
+            else:
+                return render(request, 'webapp/profile.html', {'profile': utilisateur})
+
+        else:
+            return render(request, 'webapp/profile.html', {'profile': utilisateur})
+
+    # s'il n'est pas en ligne,
+    else:
+        return redirect('connexion')
+
+
+def update_profile(request):
     # Vérification que l'utilisateur est authentifié
-    utilisateur_en_ligne = recherche_utilisateur_en_ligne(request)
+    utilisateur = utilisateur_en_ligne(request)
     #
-    if utilisateur_en_ligne:
+    if utilisateur:
         #
         if len(request.POST) > 0:
             #
-            if type(utilisateur_en_ligne) == Utilisateur:
+            if type(utilisateur) == Utilisateur:
                 #
-                form = Form_Modification_Profile(request.POST, instance=utilisateur_en_ligne)
+                form = Form_Modif_Profile(request.POST, instance=utilisateur)
 
                 if form.is_valid:
                     form.save()
                     return redirect('bienvenue')
         else:
-            form = Form_Modification_Profile(instance=utilisateur_en_ligne)
+            form = Form_Modif_Profile(instance=utilisateur)
             return render(request, 'webapp/modification_profile.html', {'form': form})
     else:
         return redirect('connexion')
 
-        # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-def suppression_profile(request):
+def del_profile(request):
     # Vérification que l'utilisateur est authentifié
-    utilisateur_en_ligne = recherche_utilisateur_en_ligne(request)
+    utilisateur = utilisateur_en_ligne(request)
     #
-    if utilisateur_en_ligne:
+    if utilisateur:
         #
         if len(request.POST) > 0:
             #
             if type(utilisateur_en_ligne) == Utilisateur:
                 #
-                form = Form_Suppression_Profile(request.POST, instance=utilisateur_en_ligne)
+                form = Form_Supp_Profile(request.POST)
 
                 if form.is_valid:
-                    form.save()
-                    return redirect('bienvenue')
+                    # récupère le seul utilisateur en question
+                    utilisateur = Utilisateur.objects.get(id=1)
+                    # supprime cet utilisateur
+                    utilisateur.delete()
+
+                    return redirect('connexion')
         else:
-            form = Form_Modification_Profile(instance=utilisateur_en_ligne)
+            # rempli des données de l'utilisateur
+            form = Form_Supp_Profile()
             return render(request, 'webapp/suppression_profile.html', {'form': form})
     else:
         return redirect('connexion')
@@ -194,48 +189,37 @@ def suppression_profile(request):
         # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-def ajouter_un_utilisateur(request):
-    utilisateur_en_ligne = recherche_utilisateur_en_ligne(request)
-    if utilisateur_en_ligne:
-        # Teste si le formulaire a été envoyé
-        if len(request.GET) > 0:
-            form = AddFriendForm(request.GET)
+def add_user(request):
+    utilisateur = utilisateur_en_ligne(request)
+
+    if utilisateur:
+
+        if len(request.POST) > 0:
+
+            form = Form_Ajout_Utilisateur(request.POST)
+
             if form.is_valid():
-                new_friend_email = form.cleaned_data['email']
-                newFriend = Utilisateur.objects.get(email=new_friend_email)
-                utilisateur_en_ligne.collegues.add(newFriend)
-                utilisateur_en_ligne.save()
+
+                email = form.cleaned_data['email']
+                # récupérer l'email du contact (de l'utilisateur à ajouter)
+                contact = Utilisateur.objects.get(email=email)
+
+                # problème à ce niveau
+                utilisateur.contact.add(contact)  # PROBLEME
+
+                utilisateur.save()
                 return redirect('bienvenue')
+
             else:
-                form = AddFriendForm()
-                return render(request, 'webapp/ajouter_un_utilisateur.html', {'form': form})
+
+                form = Form_Ajout_Utilisateur()
+
+                return render(request, 'webapp/ajout_utilisateur.html', {'form': form})
             # Le formulaire n’a pas été envoyé
         else:
-            form = AddFriendForm()
-            return render(request, 'webapp/ajouter_un_utilisateur.html', {'form': form})
-    else:
-        return redirect('connexion')
 
+            form = Form_Ajout_Utilisateur()
 
-def voir_profile_utilisateur(request):
-    utilisateur_en_ligne = recherche_utilisateur_en_ligne(request)
-    if utilisateur_en_ligne:
-
-        if 'utilisateurAvoir' in request.POST and request.POST['utilisateurAvoir'] != '':
-
-            id_utilisateur_a_voir = int(request.POST['utilisateurAvoir'])
-
-            donnees = Utilisateur.objects.filter(id=id_utilisateur_a_voir)
-
-            if len(donnees) == 1:
-                utilisateur_a_voir = Utilisateur.objects.get(id=id_utilisateur_a_voir)
-
-                return render(request, 'webapp/voir_profile_utilisateur.html', {'utilisateur_a_voir': utilisateur_a_voir})
-
-            else:
-                return render(request, 'webapp/voir_profile_utilisateur.html', {'utilisateur_a_voir': utilisateur_en_ligne})
-                # Le paramètre n’a pas été trouvé
-        else:
-            return render(request, 'webapp/voir_profile_utilisateur.html', {'utilisateur_a_voir': utilisateur_en_ligne})
+            return render(request, 'webapp/ajout_utilisateur.html', {'form': form})
     else:
         return redirect('connexion')
