@@ -8,10 +8,11 @@
         <title> Django – {% block title %}  {% endblock %} </title>
     </head>
     
-    <body  id="{% block bodyId %}  {% endblock %}">
+    <body  id="{% block bodyId %} genericPage {% endblock %}">
         
         <header>
-            {% block headerContent %} 
+            {% block headerContent %}
+
 
             {% endblock %}
         </header>

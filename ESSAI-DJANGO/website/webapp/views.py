@@ -5,7 +5,7 @@ from .forms import Form_Connexion, Form_Modif_Profile, Form_Inscription, Form_Aj
 from .models import Utilisateur, Message
 
 
-def connexion(request):
+def login(request):
     # dès que l'utilisateur (nous) envoie ses données (4)
     if request.method == 'POST':
         # on remplis le formulaire
@@ -103,9 +103,10 @@ def bienvenue(request):
 
 
 def deconnexion(request):
+
     del request.session['utilisateur']
 
-    return redirect(request, 'webapp/connexion.html')
+    return redirect(request, 'monappli/deconnexion.html')
 
 
 def profile(request):
@@ -185,8 +186,6 @@ def del_profile(request):
             return render(request, 'webapp/suppression_profile.html', {'form': form})
     else:
         return redirect('connexion')
-
-        # -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 def add_user(request):

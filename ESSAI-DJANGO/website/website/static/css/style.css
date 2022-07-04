@@ -7,7 +7,7 @@ header
   top: 0;
   height: 80px;
   width: 100%;
-  background: #3b5998 url('../image/logo.png') no-repeat 50px 25px;
+  background: #3b5998 url('') no-repeat 50px 25px;
   border-bottom: solid 1px #133783;
 }
 

@@ -8,8 +8,7 @@
                            
 
     {% block headerContent %}
-        <img src="{% static 'image/logo.png' %}" height="100" width="200">
-        <p id="name" style="color: black;">{{ utilisateur.prenom }} {{ utilisateur.nom }}</p>
+        <p id="name">{{ utilisateur.prenom | capfirst }} {{ utilisateur.nom | capfirst }}</p>
         <p id="function">
             {% if utilisateur_en_ligne.type_personne == 'Utilisateur' %}
             Étudiant en
