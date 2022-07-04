@@ -1,0 +1,24 @@
+{% extends "monappli/base.html" %}
+
+{% block title %} Inscription {% endblock %}
+
+{% block bodyId %} registerPage {% endblock %}
+
+{% block contenu-section %}
+
+	<form  method="POST"> {% csrf_token %} <!-- MESURE DE SÉCURITÉ -->
+
+
+		{% if error %}
+			<p>{{ error }}</p>  <!-- MESSAGE D'ERREURS -->
+		{% endif %}
+
+		{{form.as_p}} <!-- FORMULAIRE -->
+
+		<p>
+ 			<input type="submit" value="S'inscrire"/>
+ 			<a href="{% url 'connexion' %}"> Se connecter </a>
+ 		</p>
+	</form>
+
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends "monappli/base.html" %}
+
+{% block title %} Accueil {% endblock %}
+
+{% block bodyId %} welcomePage {% endblock %}
+
+{% load static %}
+
+
+{% block contenu-header %}
+
+    <p><a href=""> Déconnexion </a> </p>
+
+        <p id="name">{{ utilisateur.prenom | capfirst }} {{ utilisateur.nom | capfirst }}</p>
+
+        <p id="profileLinks">
+            <a href=" " class="buttonLink">Voir le profil</a>
+            <a href=" " class="buttonLink">Modifier le profil</a>
+        </p>
+
+        <p><a href="{% url 'connexion' %}"> Connexion </a> </p>
+
+
+{% endblock %}
+
+
+
+{% block contenu-section %}
+
+    <section id="messageList">
+
+    </section>
+
+    <section id="friendList">
+
+    </section>
+
+{% endblock %}
+

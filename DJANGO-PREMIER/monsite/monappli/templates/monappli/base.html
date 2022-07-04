@@ -1,0 +1,28 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <title> Django – {% block titre %}  {% endblock %} </title>
+    </head>
+
+    <body  id="{% block bodyId %} genericPage {% endblock %}">
+
+        <header>
+            {% block contenu-header %}
+
+
+            {% endblock %}
+        </header>
+
+        <section id="contenu-section">
+            {% block contenu-section %}
+
+
+            {% endblock %}
+        </section>
+
+    </body>
+</html>

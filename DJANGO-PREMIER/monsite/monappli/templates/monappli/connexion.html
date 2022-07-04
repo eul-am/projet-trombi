@@ -1,0 +1,23 @@
+{% extends "monappli/base.html" %}
+
+{% block title %} Connexion {% endblock %}
+
+{% block bodyId %} loginPage {% endblock %}
+
+{% block contenu-header %}
+
+	<form  method="POST"> {% csrf_token %} <!-- MESURE DE SÉCURITÉ -->
+
+		{% if error %}
+			<p>{{ error }}</p>  <!-- MESSAGE D'ERREURS -->
+		{% endif %}
+
+		{{form.as_p}} <!-- FORMULAIRE -->
+
+		<p>
+ 			<input type="submit" value="Se connecter"/>
+ 			<a href="{% url 'inscription' %}"> Créer un compte </a>
+ 		</p>
+	</form>
+
+{% endblock %}
