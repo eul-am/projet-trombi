@@ -2,30 +2,29 @@
 
 {% block title %} Accueil {% endblock %}
 
-{% block bodyId %} welcomePage {% endblock %}
+{% block welcomPage %} welcomePage {% endblock %}
 
 {% load static %}
 
+{% block headerContent %}
 
-{% block contenu-header %}
-
-    <p><a href=""> Déconnexion </a> </p>
+    <p>
+        <a href="{% url 'connexion' %}"> Connexion </a>
+        <a href=""> Déconnexion </a>
+    </p>
 
         <p id="name">{{ utilisateur.prenom | capfirst }} {{ utilisateur.nom | capfirst }}</p>
 
-        <p id="profileLinks">
-            <a href=" " class="buttonLink">Voir le profil</a>
-            <a href=" " class="buttonLink">Modifier le profil</a>
-        </p>
-
-        <p><a href="{% url 'connexion' %}"> Connexion </a> </p>
-
+    <p id="profileLinks">
+        <a href=" " class="buttonLink">Voir le profil</a>
+        <a href=" " class="buttonLink">Modifier le profil</a>
+    </p>
 
 {% endblock %}
 
 
 
-{% block contenu-section %}
+{% block content %}
 
     <section id="messageList">
 

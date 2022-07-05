@@ -1,9 +1,9 @@
 from django import forms
-from .models import Utilisateur
+from .models import Utilisateur, Employe
 
 
-class Connexion(forms.ModelForm):
-
+class Connexion(forms.Form):
+    email = forms.EmailField(label='Courriel', )
     password = forms.CharField(label='Mot de passe', widget=forms.PasswordInput)
 
     def clean(self):
@@ -31,8 +31,9 @@ class Connexion(forms.ModelForm):
         fields = ('email', 'password',)
 
 
-class Inscription(forms.ModelForm):
+class Inscription(forms.Form):
     password = forms.CharField(label='Mot de passe', widget=forms.PasswordInput)
+
     def clean(self):
         # nettoyage des données du formulaire d'inscription
         cleaned_data = super(Inscription, self).clean()
@@ -52,3 +53,47 @@ class Inscription(forms.ModelForm):
     class Meta:
         model = Utilisateur
         fields = '__all__'
+
+
+class Inscription_Employe(forms.Form):
+
+    CHOIX_SERVICE = [
+        ('D', 'DIRECTION'),
+        ('A', 'AUDIT'),
+        ('I', 'INFORMATIQUE'),
+        ('CPT', 'COMPTABILITÉ'),
+        ('J', 'JURIDIQUE'),
+        ('M', 'MARKETING'),
+        ('CMC', 'COMMERCIAL'),
+        ('COUR', 'COURRIER'),
+        ('CM', 'COMMUNICATION'),
+    ]
+
+    CHOIX_SEXE = [
+        ('H', 'HOMME'),
+        ('F', 'FEMME'),
+    ]
+    nom = forms.CharField(label='Nom', max_length=30)
+    prenom = forms.CharField(label='Prénom', max_length=30)
+    sexe = forms.ChoiceField(label='Sexe', choices=CHOIX_SEXE)
+    service = forms.ChoiceField(label='Service', choices=CHOIX_SERVICE)
+    poste = forms.CharField(label='Poste', max_length=30)
+    email = forms.EmailField(label='Courriel', )
+    password = forms.CharField(label='Mot de passe', widget=forms.PasswordInput)
+
+    def clean(self):
+        # nettoyage des données du formulaire d'inscription
+        cleaned_data = super(Inscription_Employe, self).clean()
+        #
+        email = cleaned_data.get("email")
+        # si l'email a bien été saisi
+        if email:
+            # on compte le nombre d'email saisie par l'utilisateur
+            email = Utilisateur.objects.filter(email=email).count()
+            # s'il y en a plus de zéro, ça veut dire que l'email existe
+            if email > 0:
+                # et il faut le signaler
+                raise forms.ValidationError("Compte existant.")
+            # sinon, il faut retourner les données nettoyées
+        return cleaned_data
+

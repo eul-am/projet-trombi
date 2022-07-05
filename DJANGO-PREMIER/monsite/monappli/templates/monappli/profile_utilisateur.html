@@ -10,8 +10,7 @@
 
   <h1> Création d'un compte </h1>
 
-	<form  method="POST" action=""> {% csrf_token %} <!-- MESURE DE SÉCURITÉ -->
-
+	<form  method="POST" > {% csrf_token %} <!-- MESURE DE SÉCURITÉ -->
 
 		{% if error %}
 			<p>{{ error }}</p>  <!-- MESSAGE D'ERREURS -->

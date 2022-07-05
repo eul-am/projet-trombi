@@ -1,0 +1,124 @@
+header
+{
+    position: absolute;
+    /* positionner à 0px du bord gauche de l'en-tête */
+    left: 0;
+    /* positionner à 0px du bord supérieur de l'en-tête */
+    top: 0;
+    /* hauteur de l'en-tête */
+    height : 80px;
+    /* largeur de l'en-tête */
+    width: 100%;
+    /* couleur & image d'arrière-plan */
+    background: #3b5998 url('../image/logo.png') no-repeat /*50px*/ 25px;
+    /* couleur & bordure inférieure */
+    border-bottom: 1px solid #133783
+}
+
+body
+{
+    margin: 0;
+    padding: 0;
+    /* police du texte */
+    font-family: "Lucida Grande", Tahoma, Verdana, Arial, sans-serif;
+    /* taille du texte */
+    font-size: 11px;
+    color: #000333;
+}
+
+section[id='content']
+{
+    border: solid red;
+    /* positionner l'élément (la section) au coin supérieur gauche */
+    position: absolute;
+    /* positionner la section à 150px du coin (bord) supérieur gauche */
+    top: 150px;
+    /* positionner (décaler) la section à 50% du bord gauche */
+    left: 50%;
+    /* largeur de la section */
+    width: 500px;
+    /**/
+    margin: 0 0 0 -250px;
+}
+
+form label
+{
+    /* disposer les 'label' alignés (en block) les uns sous les autres */
+    display: block;
+    width: 150px;
+    /* faire flotter les boîtes 'label' à gauche, et leurs inputs avec */
+    float: left;
+    /* positionner les textes des (boîtes) labels à droite, côte à côte aux input*/
+    text-align: right;
+    /* espace à l'intérieur de la boîte 'label' : gauche - supérieur - inférieur - droite */
+    padding: 4px 10px 0 0;
+}
+
+form input[type='email'], form input[type='text'], form input[type='password']
+{
+    display: block;
+    width: 250px;
+    padding: 2px;
+}
+
+form input[type='submit']
+{
+  /*le champ input (bouton connexion) se décale un peu plus de son label*/
+  margin: 0 20px 0 160px;
+  /* style de bordure du bouton submit */
+  border-style: solid;
+  /* largeur des bordures */
+  border-width: 1px;
+  /* couleur des bordures : gauche - supérieure _ inférieure - droite */
+  border-color: #d9dfea #0e1f5b #0e1f5b #d9dfea;
+  background-color: #3b5998;
+  color: #FFFFFF;
+  padding: 2px 15px 3px 15px;
+  text-align: center;
+}
+
+a
+{
+   color : #3b5998;
+}
+
+ul.errorlist
+{
+  /*NB : dans Django, les messages d'erreurs sont des listes 'ul' de classe 'errorlist'*/
+
+  margin-left: 160px;
+  /**/
+  padding: 0px;
+  /*on retire les puces des messages d'erreurs*/
+  list-style-type: none;
+  /*couleur des messages d'erreurs*/
+  color: #d23d24;
+}
+
+body section[id='content']
+{
+  position: absolute;
+  /*top: 110px;*/
+  left: 50%;
+  width: 500px;
+  margin: 0 0 0 -250px;
+  padding: 0;
+}
+
+
+section[id='content']
+{
+
+  top: 150px;
+
+}
+
+
+h1
+{
+  text-align: center;
+  font-size: 22px;
+  margin: 0px 60px 30px 60px;
+  color: #3b5998;
+  border-bottom: 1px solid #3b5998;
+}

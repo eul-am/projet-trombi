@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .forms import Connexion, Inscription
+from .forms import Connexion, Inscription_Employe
 from .models import Utilisateur
 
 
@@ -34,6 +34,7 @@ def login(request):
         form = Connexion()
         # dont le contenu s'affiche dans cette vue (view.py) (2)
         return render(request, 'monappli/connexion.html', {'form': form})
+
 
 def logout(request):
     # dès que l'utilisateur (nous) envoie ses données (4)
@@ -80,23 +81,32 @@ def welcome(request):
 
 
 def register(request):
-
     if request.method == 'POST':
-        form = Inscription(request.POST)
+
+        form = Inscription_Employe(request.POST)
 
         if form.is_valid():
+
+            nom = form.cleaned_data['nom']
+            prenom = form.cleaned_data['prenom']
+            sexe = form.cleaned_data['sexe']
+            service = form.cleaned_data['service']
+            poste = form.cleaned_data['poste']
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+
             form.save()
 
             return redirect('connexion')
 
         else:
-            form = Inscription()
-            return render(request, 'monappli/inscription.html', {'form': form})
+            form = Inscription_Employe()
+            return render(request, 'monappli/profile_utilisateur.html', {'form': form})
     else:
 
-        form = Inscription()
+        form = Inscription_Employe()
 
-        return render(request, 'monappli/inscription.html', {'form': form})
+        return render(request, 'monappli/profile_utilisateur.html', {'form': form})
 
 
 def utilisateur_en_ligne(request):
