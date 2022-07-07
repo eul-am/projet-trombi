@@ -4,10 +4,12 @@
 
 {% block bodyId %}userProfilePage{% endblock %}
 
+
+
 {% block content %}
   <h1> Création d'un compte </h1>
 
-	<form  method="POST" action="/inscription/" > {% csrf_token %} <!-- MESURE DE SÉCURITÉ -->
+	<form  method="POST" action="" > {% csrf_token %} <!-- MESURE DE SÉCURITÉ -->
 
 		{% if error %}
 			<p>{{ error }}</p>  <!-- MESSAGE D'ERREURS -->
@@ -17,7 +19,7 @@
 
 		<p>
 			<input type="submit" value="Créer un compte"/>
- 			<a href="/connexion/"> Connexion </a>
+ 			<a href="{% url 'connexion' %}"> Connexion </a>
  		</p>
 	</form>
 {% endblock %}

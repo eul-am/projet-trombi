@@ -1,4 +1,6 @@
 from django import forms
+from django.contrib.auth.decorators import login_required
+
 from .models import Personne
 
 
@@ -20,10 +22,6 @@ class Connexion(forms.Form):
                 # il faut dire ceci
                 raise forms.ValidationError("Adresse de courriel ou mot de passe erroné.")
             # et si les deux sont faux (s'il n'existent pas)
-            elif len(donnees) == 0:
-                # il faut dire au client
-                raise forms.ValidationError('Compte inexistant')
-
         return cleaned_data
 
         # NB : les formulaires de type (forms.Form) ne prennent pas de classe Meta
@@ -49,5 +47,33 @@ class Form_Profil_Utilisateur(forms.ModelForm):
         return cleaned_data
 
     class Meta:
+        model = Personne
+        exclude = ('ami',)
+
+
+class Form_Ajout_Ami(forms.Form):
+    email = forms.EmailField(label='Courriel :')
+
+    def clean(self):
+        cleaned_data = super(Form_Ajout_Ami, self).clean()
+        email = cleaned_data.get("email")
+        # Vérifie que le champ est valide
+        if email:
+            donnees = Personne.objects.filter(email=email)
+        if len(donnees) != 1:
+            raise forms.ValidationError("Adresse de courriel erronée.")
+        return cleaned_data
+
+
+class Form_Modif_Profil(forms.ModelForm):
+    class Meta:
+        # Table dont on converti en formulaire
+        model = Personne
+        exclude = ('ami',)
+
+
+class Form_Supp_Profil(forms.ModelForm):
+    class Meta:
+        # Table dont on converti en formulaire
         model = Personne
         exclude = ('ami',)

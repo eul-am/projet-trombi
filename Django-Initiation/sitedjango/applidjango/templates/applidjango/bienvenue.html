@@ -5,21 +5,26 @@
 {% block bodyId %}welcomePage{% endblock %}
 
 {% block headerContent %}
-    <p id="nom">{{ utilisateur.prenom | capfirst }} </p>
+    <p id="nom">{{ utilisateur.prenom | capfirst }} {{ utilisateur.nom | capfirst }}</p>
 
-    <p id="function">
+    <p id="function">     </p>
 
+    <p id="profileLinks">
+        <a href="{% url 'voir_profil' %}" class="buttonLink">Voir le profil</a>
+        <a href="{% url 'modification_profil' %}" class="buttonLink">Modifier le profil</a>
     </p>
 
-<p id="profileLinks">
-    <a href="???" class="buttonLink">Voir le profil</a>
-    <a href="???" class="buttonLink">Modifier le profil</a>
-</p>
+    {% if utilisateur %}
+        <p class="deconnexion"><a href="{% url 'connexion' %}"> Déconnexion </a></p>
+    {% else %}
+        <p class="connexion"><a href="{% url 'connexion' %}"> Connexion </a></p>
+    {% endif %}
 {% endblock %}
+
 
 {% block content %}
 <section id="messageList">
-    <form action="welcome" method="get" class="inlineForm">
+    <form action="{% url 'bienvenue' %}" method="POST" class="inlineForm">
         <label for="newMessageInput">Publier un message :</label>
         <input type="text" name="newMessage" id="newMessageInput" />
         <input type="submit" value="Publier" />
@@ -29,8 +34,7 @@
  {% for message in friendMessages %}
     <li>
         <p>
-            <a href="???">{{ message.author.prenom }}
-            {{ message.auteur.nom }}</a> dit :
+            <a href="{% url 'bienvenue' %}">{{ message.author.prenom }} {{ message.auteur.nom }}</a> dit :
         </p>
 
         <p>{{ message.contenu }}</p>
@@ -41,11 +45,11 @@
 
 <section id="friendList">
     <p class="title">Mes amis</p>
-    <p><a href="???" class="buttonLink">Ajouter</a></p>
+    <p><a href="/ajout_amis/" class="buttonLink">Ajouter</a></p>
 
     <ul>
     {% for ami in utilisateur.ami.all %}
-        <li><a href="???">{{ ami.prenom }} {{ ami.nom }}</a></li>
+        <li><a href="{% url 'voir_profil' %}">{{ Message.prenom }} {{ Message.nom }}</a></li>
     {% endfor %}
     </ul>
 </section>

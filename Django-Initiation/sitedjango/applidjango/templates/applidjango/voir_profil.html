@@ -1,0 +1,26 @@
+{% extends "applidjango/base.html" %}
+
+{% block title %}Affichage d’un profil{% endblock %}
+
+{% block bodyId %}showProfilePage{% endblock %}
+
+{% block content %}
+
+<h1>Affichage d’un profil</h1>
+
+<dl class="fieldList">
+   <dt>Nom :</dt>
+      <dd>{{ profil.nom }}</dd>
+   <dt>Prénom :</dt>
+      <dd>{{ profil.prenom }}</dd>
+    <dt>Sexe :</dt>
+      <dd>{{ profil.sexe }}</dd>
+   <dt>Courriel :</dt>
+      <dd>{{ profil.email }}</dd>
+</dl>
+
+<p id="showProfileNavigationButtons">
+   <a href="{% url 'bienvenue' %}" class="buttonLink">Retour</a>
+</p>
+
+{% endblock %}
