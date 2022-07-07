@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "applidjango/base.html" %}
 
-</body>
-</html>
+{% block title %}Accueil{% endblock %}
+
+{% block bodyId %}welcomePage{% endblock %}
+
+{% block headerContent %}
+    <p id="nom">{{ utilisateur.prenom | capfirst }} </p>
+
+    <p id="function">
+
+    </p>
+
+<p id="profileLinks">
+    <a href="???" class="buttonLink">Voir le profil</a>
+    <a href="???" class="buttonLink">Modifier le profil</a>
+</p>
+{% endblock %}
+
+{% block content %}
+<section id="messageList">
+    <form action="welcome" method="get" class="inlineForm">
+        <label for="newMessageInput">Publier un message :</label>
+        <input type="text" name="newMessage" id="newMessageInput" />
+        <input type="submit" value="Publier" />
+    </form>
+
+ <ul>
+ {% for message in friendMessages %}
+    <li>
+        <p>
+            <a href="???">{{ message.author.prenom }}
+            {{ message.auteur.nom }}</a> dit :
+        </p>
+
+        <p>{{ message.contenu }}</p>
+    </li>
+ {% endfor %}
+ </ul>
+</section>
+
+<section id="friendList">
+    <p class="title">Mes amis</p>
+    <p><a href="???" class="buttonLink">Ajouter</a></p>
+
+    <ul>
+    {% for ami in utilisateur.ami.all %}
+        <li><a href="???">{{ ami.prenom }} {{ ami.nom }}</a></li>
+    {% endfor %}
+    </ul>
+</section>
+{% endblock %}

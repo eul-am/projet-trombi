@@ -1,0 +1,23 @@
+{% extends "applidjango/base.html" %}
+
+{% block title %}Création d'un profil{% endblock %}
+
+{% block bodyId %}userProfilePage{% endblock %}
+
+{% block content %}
+  <h1> Création d'un compte </h1>
+
+	<form  method="POST" action="/inscription/" > {% csrf_token %} <!-- MESURE DE SÉCURITÉ -->
+
+		{% if error %}
+			<p>{{ error }}</p>  <!-- MESSAGE D'ERREURS -->
+		{% endif %}
+
+		{{form.as_p}} <!-- FORMULAIRE -->
+
+		<p>
+			<input type="submit" value="Créer un compte"/>
+ 			<a href="/connexion/"> Connexion </a>
+ 		</p>
+	</form>
+{% endblock %}

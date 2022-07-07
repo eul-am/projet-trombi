@@ -1,0 +1,262 @@
+header
+{
+    position: absolute;
+    /* positionner à 0px du bord gauche de l'en-tête */
+    left: 0;
+    /* positionner à 0px du bord supérieur de l'en-tête */
+    top: 0;
+    /* hauteur de l'en-tête */
+    height : 80px;
+    /* largeur de l'en-tête */
+    width: 100%;
+    /* couleur & image d'arrière-plan */
+    background: #3b5998 url('../image/logo.png') no-repeat /*50px*/ 25px;
+    /* couleur & bordure inférieure */
+    border-bottom: 1px solid #133783
+}
+
+body
+{
+    margin: 0;
+    padding: 0;
+    /* police du texte */
+    font-family: "Lucida Grande", Tahoma, Verdana, Arial, sans-serif;
+    /* taille du texte */
+    font-size: 11px;
+    color: #000333;
+}
+
+section[id='content'], section[id='content']
+{
+    /* positionner l'élément (la section) au coin supérieur gauche */
+    position: absolute;
+    /* positionner la section à 150px du coin (bord) supérieur gauche */
+    top: 150px;
+    /* positionner (décaler) la section à 50% du bord gauche */
+    left: 50%;
+    /* largeur de la section */
+    width: 500px;
+    /**/
+    margin: 0 0 0 -250px;
+}
+
+form label
+{
+    /* disposer les 'label' alignés (en block) les uns sous les autres */
+    display: block;
+    width: 150px;
+    /* faire flotter les boîtes 'label' à gauche, et leurs inputs avec */
+    float: left;
+    /* positionner les textes des (boîtes) labels à droite, côte à côte aux input*/
+    text-align: right;
+    /* espace à l'intérieur de la boîte 'label' : gauche - supérieur - inférieur - droite */
+    padding: 4px 10px 0 0;
+}
+
+form input[type='email'], form input[type='text'], form input[type='password']
+{
+    display: block;
+    width: 250px;
+    padding: 2px;
+}
+
+form input[type='submit']
+{
+  /*le champ input (bouton connexion) se décale un peu plus de son label*/
+  margin: 0 20px 0 160px;
+  /* style de bordure du bouton submit */
+  border-style: solid;
+  /* largeur des bordures */
+  border-width: 1px;
+  /* couleur des bordures : gauche - supérieure _ inférieure - droite */
+  border-color: #d9dfea #0e1f5b #0e1f5b #d9dfea;
+  background-color: #3b5998;
+  color: #FFFFFF;
+  padding: 2px 15px 3px 15px;
+  text-align: center;
+}
+
+a
+{
+   color : #3b5998;
+}
+
+ul.errorlist
+{
+  /*NB : dans Django, les messages d'erreurs sont des listes 'ul' de classe 'errorlist'*/
+
+  margin-left: 160px;
+  /**/
+  padding: 0px;
+  /*on retire les puces des messages d'erreurs*/
+  list-style-type: none;
+  /*couleur des messages d'erreurs*/
+  color: #d23d24;
+}
+
+body section[id='content']
+{
+  position: absolute;
+  /*top: 110px;*/
+  left: 50%;
+  width: 500px;
+  margin: 0 0 0 -250px;
+  padding: 0;
+}
+
+
+section[id='content']
+{
+
+  top: 150px;
+
+}
+
+
+h1
+{
+  text-align: center;
+  font-size: 22px;
+  margin: 0px 60px 30px 60px;
+  color: #3b5998;
+  border-bottom: 1px solid #3b5998;
+}
+
+
+header
+{
+    background: #3b5998 url('../image/logo.png') no-repeat /*20px*/ 25px;
+    color: #FFFFFF;
+}
+
+header p[id='nom']
+{
+    /* augmenter la taille du texte de 22px */
+    font-size: 22px;
+    /**/
+    margin: 20px 0 0 70px;
+}
+
+header p[id='function']
+{
+    margin: 0 0 0 70px;
+}
+
+header p[id='profileLinks']
+{
+    position: absolute;
+    right: 40px;
+    top: 25px;
+}
+
+a[class='buttonLink']
+{
+   border-style: solid;
+   border-width: 1px;
+   border-color: #d9dfea #0e1f5b #0e1f5b #d9dfea;
+   background-color: #3b5998;
+   color: #FFFFFF;
+   padding: 2px 15px 3px 15px;
+   text-align: center;
+   text-decoration: none;
+}
+
+
+body[id='welcomePage'] section[id='content']
+{
+    width: 800px;
+    margin: 0 0 0 -400px;
+}
+
+body[id='welcomePage']  section[id='messageList']
+{
+    position: absolute;
+    width: 600px;
+}
+
+body[id='welcomePage']  section[id='friendList']
+{
+    position: absolute;
+    width: 200px;
+    right: 0;
+}
+
+
+form.inlineForm label
+{
+    display: inline;
+    float: none;
+    padding: 0;
+}
+
+form.inlineForm input[type="text"]
+{
+/*disposer le 'label' alignés (en block) à droite de l'input */
+    display: inline-block;
+    /* largeur de l'input */
+    width: 150px;
+
+}
+
+form.inlineForm input[type="submit"]
+{
+    /* retirer les marges du bouton submit : il se place côte à côte à côte à l'input*/
+    margin: 0;
+}
+
+section[id='messageList'] ul
+{
+    /**/
+    margin: 20px 0 0 0;
+    /* retirer les puces (de la liste des messages)*/
+    list-style: none;
+    /* Supprimer l'espace intérieur de la boîte */
+    padding: 0;
+}
+
+section[id='messageList'] ul li
+{
+    /**/
+    margin-bottom: 10px;
+}
+
+section[id='messageList'] ul li p
+{
+    /**/
+    margin: 8px 0 0 0;
+}
+
+
+body[id='welcomePage']  section[id='friendList']
+{
+    position: absolute;
+    width: 180px;
+    /**
+    right: 0;
+    /**/
+    padding: 10px;
+    /**/
+    background-color: #DCE0ED;
+
+}
+
+section[id='friendList']  p.title
+ {
+    font-size: 22px;
+    color: #3b5998;
+    /* bordure en dessous du titre */
+    border-bottom: 1px solid #3b5998;
+    margin: 0 0 20px 0;
+}
+
+section[id='friendList'] ul
+{
+    margin: 20px 0 0 0;
+    list-style: none;
+    padding: 0;
+}
+
+section[id='friendList'] ul li
+{
+    margin: 0 0 5px 0;
+}
